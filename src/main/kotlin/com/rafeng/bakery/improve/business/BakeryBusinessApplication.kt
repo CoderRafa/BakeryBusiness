@@ -1,4 +1,4 @@
-package com.rafengimprove.bakerybusiness
+package com.rafeng.bakery.improve.business
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
