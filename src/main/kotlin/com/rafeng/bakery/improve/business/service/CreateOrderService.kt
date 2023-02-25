@@ -17,6 +17,6 @@ interface CreateOrderService {
      */
     fun createNewOrder(item: Item, amount: Int): Order  // 1) First ordered element: I wanna this bun
     fun createNewOrder(sellItems: Set<SellItem>): Order  // 3) Transfer SellItem to a new order
-    fun addItemTo(item: Item, order: Order): Order // 2) Oh I wanna this cake too and then I wanna a tea
-    fun delete(order: Order)
+    fun addItemTo(item: Item, order: Order, amount: Int): Order // 2) Oh I wanna this cake too and then I wanna a tea
+    fun delete(order: Order, item: Item)
 }
