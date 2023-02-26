@@ -26,19 +26,30 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
     }
 
     override fun createNewOrder(sellItems: Set<SellItem>): Order {
-        TODO()
+        return Order(
+            sellItems.toMutableList(),
+            countTotal(sellItems)
+        )
+    }
+
+    private fun countTotal(sellItems: Set<SellItem>): Double {
+        return sellItems.sumOf { it.price * it.amount }
     }
 
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
-        order.sellItems.add(
-            SellItem(
-                item,
-                priceService.findPriceBy(item.recipe)!!,
-                item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
-                amount
+        if(order.sellItems.any { it.item == item }) {
+            order.total += priceService.findPriceBy(item.recipe)!! * amount
+        }else {
+            order.sellItems.add(
+                SellItem(
+                    item,
+                    priceService.findPriceBy(item.recipe)!!,
+                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
+                    amount
+                )
             )
-        )
-        order.total += priceService.findPriceBy(item.recipe)!! * amount
+            order.total += priceService.findPriceBy(item.recipe)!! * amount
+        }
 
         return order
     }
