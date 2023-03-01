@@ -37,19 +37,19 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
     }
 
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
-        if(order.sellItems.any { it.item == item }) {
-            order.total += priceService.findPriceBy(item.recipe)!! * amount
-        }else {
+        val price = priceService.findPriceBy(item.recipe)!!
+        val sellItem = order.sellItems.firstOrNull { it.item == item }?.let { it.amount = it.amount + amount }
+        if (sellItem == null) {
             order.sellItems.add(
                 SellItem(
                     item,
-                    priceService.findPriceBy(item.recipe)!!,
+                    price,
                     item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
             )
-            order.total += priceService.findPriceBy(item.recipe)!! * amount
         }
+        order.total += price * amount
 
         return order
     }

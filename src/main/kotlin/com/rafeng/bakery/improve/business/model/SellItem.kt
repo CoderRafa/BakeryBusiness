@@ -6,5 +6,5 @@ data class SellItem(
     val item: Item,
     val price: Double,
     val expirationDate: LocalDateTime,
-    val amount: Int
+    var amount: Int
 )
