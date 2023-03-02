@@ -16,7 +16,25 @@ interface CreateOrderService {
      * @param amount - How many items we want to add to an order.
      */
     fun createNewOrder(item: Item, amount: Int): Order  // 1) First ordered element: I wanna this bun
+
+    /**
+     * This function creates a new order from a given list of sell items.
+     * @param sellItems - The list of sell items we have to create an order with.
+     */
     fun createNewOrder(sellItems: Set<SellItem>): Order  // 3) Transfer SellItem to a new order
+
+    /**
+     * This function adds an item to an existing order in progress.
+     * @param item - The item we want to add to an order.
+     * @param item - The item we want to add to an order
+     * @param amount - Haw many of these items we would like to add to the order.
+     */
     fun addItemTo(item: Item, order: Order, amount: Int): Order // 2) Oh I wanna this cake too and then I wanna a tea
+
+    /**
+     * This function deletes an item from an existing order in progress.
+     * @param order - From which order we would like to delete this item.
+     * @param item - Which item we would like to delete.
+     */
     fun delete(order: Order, item: Item)
 }

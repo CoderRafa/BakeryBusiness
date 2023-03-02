@@ -12,19 +12,28 @@ import com.rafeng.bakery.improve.business.service.PriceService
  * This class can delete an item from an order.
  */
 class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrderService {
+    /**
+     * This function can create a new order from an item and its amount
+     */
     override fun createNewOrder(item: Item, amount: Int): Order {
+
+        val price = priceService.findPriceBy(item.recipe)
+
         return Order(
             mutableListOf(
                 SellItem(
                     item,
-                    priceService.findPriceBy(item.recipe)!!,
+                    price!!,
                     item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
-            ), priceService.findPriceBy(item.recipe)!! * amount
+            ), price!! * amount
         )
     }
 
+    /**
+     * This function can create a new order from a list of sellItems.
+     */
     override fun createNewOrder(sellItems: Set<SellItem>): Order {
         return Order(
             sellItems.toMutableList(),
@@ -32,10 +41,16 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
         )
     }
 
+    /**
+     * This function can count the total price af a group of sellItems passed to it as an argument.
+     */
     private fun countTotal(sellItems: Set<SellItem>): Double {
         return sellItems.sumOf { it.price * it.amount }
     }
 
+    /**
+     * This function can add an item to an existing order in progress.
+     */
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
         val price = priceService.findPriceBy(item.recipe)!!
         val sellItem = order.sellItems.firstOrNull { it.item == item }?.let { it.amount = it.amount + amount }
@@ -54,6 +69,9 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
         return order
     }
 
+    /**
+     * This function can delete an item from an order.
+     */
     override fun delete(order: Order, item: Item) {
         val itemAmount: Int = order.sellItems.filter { it.item.name == item.name }[0].amount
         order.total -= priceService.findPriceBy(item.recipe)!! * itemAmount
