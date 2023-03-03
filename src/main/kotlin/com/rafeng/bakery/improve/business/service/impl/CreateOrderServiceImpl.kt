@@ -27,7 +27,7 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
                     item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
-            ), price!! * amount
+            ), price * amount
         )
     }
 
