@@ -2,6 +2,9 @@ package com.rafeng.bakery.improve.business.model
 
 import java.time.LocalDateTime
 
+/**
+ * This class describes an item that can be produced in the bakery
+ */
 data class Item(
     val name: String,
     val weight: Double,
