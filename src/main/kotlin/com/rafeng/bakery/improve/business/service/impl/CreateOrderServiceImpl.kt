@@ -24,7 +24,7 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
                 SellItem(
                     item,
                     price!!,
-                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
+//                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
             ), price * amount
@@ -59,7 +59,7 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
                 SellItem(
                     item,
                     price,
-                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
+//                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
             )
