@@ -5,6 +5,7 @@ import com.rafeng.bakery.improve.business.model.Order
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
+import java.time.LocalDateTime
 
 /**
  * This class can creates an order.
@@ -53,16 +54,18 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
      */
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
         val price = priceService.findPriceBy(item.recipe)!!
-        val sellItem = order.sellItems.firstOrNull { it.item == item }?.let { it.amount = it.amount + amount }
-        if (sellItem == null) {
-            order.sellItems.add(
-                SellItem(
-                    item,
-                    price,
-//                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
-                    amount
-                )
-            )
+        var isSellItemExist = false
+        val sellItem = order
+            .sellItems
+            .firstOrNull { it.item == item }
+            ?.also {
+                isSellItemExist = true
+            } ?: SellItem(item, price, 0, LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong()))
+        if (isSellItemExist && amount > 0) {
+            sellItem.amount = amount
+            order.sellItems.add(sellItem)
+        } else if (sellItem.amount > amount) {
+            sellItem.amount += amount
         }
         order.total += price * amount
 
