@@ -61,7 +61,7 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
             ?.also {
                 isSellItemExist = true
             } ?: SellItem(item, price, 0, LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong()))
-        if (isSellItemExist && amount > 0) {
+        if (!isSellItemExist && amount > 0) {
             sellItem.amount = amount
             order.sellItems.add(sellItem)
         } else if (sellItem.amount > amount) {
