@@ -17,5 +17,5 @@ data class Item(
     val allergens: List<Allergen>,
     val isVegan: Boolean,
     val recipe: Recipe,
-    val createDate: LocalDateTime,
+//    val createDate: LocalDateTime,
 )

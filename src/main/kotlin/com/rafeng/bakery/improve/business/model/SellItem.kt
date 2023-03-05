@@ -8,6 +8,6 @@ import java.time.LocalDateTime
 data class SellItem(
     val item: Item,
     val price: Double,
-    val expirationDate: LocalDateTime,
+//    val expirationDate: LocalDateTime,
     var amount: Int
 )
