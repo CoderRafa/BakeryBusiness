@@ -16,6 +16,36 @@ data class Item(
     val calories: Int,
     val allergens: List<Allergen>,
     val isVegan: Boolean,
-    val recipe: Recipe,
-//    val createDate: LocalDateTime,
-)
+    val recipe: Recipe
+) {
+    var createDate: LocalDateTime = LocalDateTime.now()
+
+    constructor(
+        name: String,
+        weight: Double,
+        size: ItemSize,
+        smell: ItemSmell,
+        taste: Taste,
+        filling: List<ItemFilling>,
+        topping: List<ItemTopping>,
+        calories: Int,
+        allergens: List<Allergen>,
+        isVegan: Boolean,
+        recipe: Recipe,
+        createDate: LocalDateTime
+    ) : this(
+        name,
+        weight,
+        size,
+        smell,
+        taste,
+        filling,
+        topping,
+        calories,
+        allergens,
+        isVegan,
+        recipe
+    ) {
+        this.createDate = createDate
+    }
+}

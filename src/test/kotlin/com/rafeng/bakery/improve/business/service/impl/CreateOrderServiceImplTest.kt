@@ -1,13 +1,10 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.Filling
-import com.rafeng.bakery.improve.business.model.FillingType
 import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.Item
 import com.rafeng.bakery.improve.business.model.ItemFilling
 import com.rafeng.bakery.improve.business.model.ItemSize
-import com.rafeng.bakery.improve.business.model.ItemSize.MEDIUM
-import com.rafeng.bakery.improve.business.model.ItemSmell
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.ItemTopping
 import com.rafeng.bakery.improve.business.model.Order
@@ -26,6 +23,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
@@ -69,44 +67,35 @@ class CreateOrderServiceImplTest {
 
     @Test
     fun `Happy pass - add a new item to the existing order`() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
+
         val newOrder = createOrder(recipe, 2)
+        val item = newOrder.sellItems[0].item
 
-        val order = createOrderService.addItemTo(createItemByRecipe(recipe), newOrder, 1)
-
-//        val order = createOrder(recipe, 1)
-//        if(newOrder.sellItems[0].item == order.sellItems[0].item){
-//            println("They are Equal")
-//        }else{
-//            println(newOrder.sellItems[0].item)
-//            println(order.sellItems[0].item)
-//        }
+        val order = createOrderService.addItemTo(item, newOrder, 1)
 
         assertThat(order.sellItems).size().isEqualTo(1)
         assertThat(order.sellItems).allMatch { it.item.recipe == recipe }
         assertThat(order.sellItems).allMatch { it.amount == 3 }
-//        assertThat(newOrder.total).isEqualTo(30.0)
-//
-//        verify(priceService, times(2)).findPriceBy(recipe)
+        assertThat(newOrder.total).isEqualTo(30.0)
+
+        verify(priceService, times(2)).findPriceBy(recipe)
     }
 
-    private fun createItemByRecipe(recipe: Recipe): Item {
-        return Item ("Bun",
-        100.0,
-        MEDIUM,
-        STRONG,
-        SWEET,
-        listOf(ItemFilling(Filling("test", "super test", JAM, SWEET), 10.0)),
-        listOf(ItemTopping(Topping("test", "super test", ToppingType.CREAM, SWEET), 10.0)),
-        300,
-        listOf(),
-        false,
-        recipe,
-//        LocalDateTime.now()
-        )
+    @Test
+    fun testCreateNewOrder() {
+    }
+
+    @Test
+    fun addItemTo() {
+    }
+
+    @Test
+    fun delete() {
     }
 
     private fun createOrder(recipe: Recipe, amount: Int): Order {
-        return createOrderService.createNewOrder(createItemByRecipe(recipe), amount)
+        return createOrderService.createNewOrder(createRandomItemByRecipe(recipe), amount)
     }
 
     private fun createRandomItemByRecipe(recipe: Recipe): Item {
@@ -122,20 +111,8 @@ class CreateOrderServiceImplTest {
             listOf(),
             false,
             recipe,
-//            LocalDateTime.now()
+            LocalDateTime.now()
 
         )
-    }
-
-    @Test
-    fun testCreateNewOrder() {
-    }
-
-    @Test
-    fun addItemTo() {
-    }
-
-    @Test
-    fun delete() {
     }
 }
