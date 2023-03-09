@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import java.time.LocalDateTime
+import kotlin.math.abs
 
 /**
  * This class can creates an order.
@@ -53,6 +54,7 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
      * This function can add an item to an existing order in progress.
      */
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
+
         val price = priceService.findPriceBy(item.recipe)!!
         var isSellItemExist = false
         val sellItem = order
@@ -64,7 +66,11 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
         if (!isSellItemExist && amount > 0) {
             sellItem.amount = amount
             order.sellItems.add(sellItem)
-        } else if (sellItem.amount > amount) {
+        } else if (isSellItemExist && amount < 0 && sellItem.amount >= abs(amount)) {
+            sellItem.amount += amount
+        } else if ( isSellItemExist && amount < 0 && sellItem.amount <= abs(amount)) {
+            println("Subtracted amount can't be more than the existing amount")
+        } else if (isSellItemExist && amount > 0) {
             sellItem.amount += amount
         }
         order.total += price * amount
