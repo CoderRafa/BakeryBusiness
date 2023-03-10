@@ -56,17 +56,14 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
     override fun addItemTo(item: Item, order: Order, amount: Int): Order {
 
         val price = priceService.findPriceBy(item.recipe)!!
-        var isSellItemExist = false
         val sellItem = order
             .sellItems
             .firstOrNull { it.item == item }
-            ?.also {
-                isSellItemExist = true
-            } ?: SellItem(item, price, 0, LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong()))
+             ?: SellItem(item, price, 0, LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong()))
                 .also { order.sellItems.add(it) }
-        if ( isSellItemExist && ((amount < 0 && sellItem.amount >= abs(amount)) || amount > 0) ) {
+        if ( (amount < 0 && sellItem.amount >= abs(amount)) || amount > 0 ) {
             sellItem.amount += amount
-        } else if ( isSellItemExist && amount < 0 && sellItem.amount <= abs(amount) ) {
+        } else if ( amount < 0 && sellItem.amount <= abs(amount) ) {
             println("Subtracted amount can't be more than the existing amount")
         }
         order.total += price * amount
