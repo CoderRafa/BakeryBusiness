@@ -63,15 +63,11 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
             ?.also {
                 isSellItemExist = true
             } ?: SellItem(item, price, 0, LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong()))
-        if (!isSellItemExist && amount > 0) {
-            sellItem.amount = amount
-            order.sellItems.add(sellItem)
-        } else if (isSellItemExist && amount < 0 && sellItem.amount >= abs(amount)) {
+                .also { order.sellItems.add(it) }
+        if ( isSellItemExist && ((amount < 0 && sellItem.amount >= abs(amount)) || amount > 0) ) {
             sellItem.amount += amount
-        } else if ( isSellItemExist && amount < 0 && sellItem.amount <= abs(amount)) {
+        } else if ( isSellItemExist && amount < 0 && sellItem.amount <= abs(amount) ) {
             println("Subtracted amount can't be more than the existing amount")
-        } else if (isSellItemExist && amount > 0) {
-            sellItem.amount += amount
         }
         order.total += price * amount
 
