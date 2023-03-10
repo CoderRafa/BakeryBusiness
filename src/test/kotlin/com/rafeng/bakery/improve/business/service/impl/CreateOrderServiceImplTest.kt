@@ -1,18 +1,9 @@
 package com.rafeng.bakery.improve.business.service.impl
 
-import com.rafeng.bakery.improve.business.model.Filling
+import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
-import com.rafeng.bakery.improve.business.model.Item
-import com.rafeng.bakery.improve.business.model.ItemFilling
-import com.rafeng.bakery.improve.business.model.ItemSize
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
-import com.rafeng.bakery.improve.business.model.ItemTopping
-import com.rafeng.bakery.improve.business.model.Order
-import com.rafeng.bakery.improve.business.model.Recipe
-import com.rafeng.bakery.improve.business.model.Taste
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
-import com.rafeng.bakery.improve.business.model.Topping
-import com.rafeng.bakery.improve.business.model.ToppingType
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.assertj.core.api.Assertions.assertThat
@@ -69,29 +60,65 @@ class CreateOrderServiceImplTest {
     fun `Happy pass - add a new item to the existing order`() {
         doReturn(10.0).`when`(priceService).findPriceBy(recipe)
 
-        val newOrder = createOrder(recipe, 2)
+        val newOrder = createOrder(recipe, 3)
         val item = newOrder.sellItems[0].item
 
-        val order = createOrderService.addItemTo(item, newOrder, 1)
+        val order = createOrderService.addItemTo(item, newOrder, 2)
 
         assertThat(order.sellItems).size().isEqualTo(1)
         assertThat(order.sellItems).allMatch { it.item.recipe == recipe }
-        assertThat(order.sellItems).allMatch { it.amount == 3 }
-        assertThat(newOrder.total).isEqualTo(30.0)
+        assertThat(order.sellItems).allMatch { it.amount == 5 }
+        assertThat(newOrder.total).isEqualTo(50.0)
 
         verify(priceService, times(2)).findPriceBy(recipe)
     }
 
     @Test
-    fun testCreateNewOrder() {
+    fun `Happy pass - create a new order by passing a set of sellItems`() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
+        val sellItems = mutableSetOf<SellItem>()
+        (1..10).forEach {
+            sellItems.add(SellItem(createRandomItemByRecipe(recipe),
+                priceService.findPriceBy(recipe)!!,
+                1
+            ))}
+        assertTrue(sellItems.size > 0)
+        assertThat(sellItems.size).isEqualTo(10)
+        assertTrue(sellItems.all { it.amount == 1} )
+        assertTrue(sellItems.all { it.price == 10.0} )
+        assertTrue(sellItems.all { it.item.recipe == recipe})
+
     }
 
     @Test
-    fun addItemTo() {
+    fun `Negative pass - adding negative amount`() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
+
+        val newOrder = createOrder(recipe, 5)
+        val item = newOrder.sellItems[0].item
+        val order = createOrderService.addItemTo(item, newOrder, -7)
+        assertFalse(order.sellItems[0].amount == -2)
     }
 
     @Test
-    fun delete() {
+    fun `Happy pass - the item is deleted from the selliItems`() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
+        val sellItems = mutableSetOf<SellItem>()
+        (1..10).forEach {
+            sellItems.add(SellItem(createRandomItemByRecipe(recipe),
+                priceService.findPriceBy(recipe)!!,
+                1
+            ))}
+        val order = createOrderFromSellItems(sellItems)
+
+        createOrderService.delete(order, sellItems.first().item)
+        assertEquals(90.0, order.total)
+        assertEquals(9, order.sellItems.size)
+
+    }
+
+    fun createOrderFromSellItems(sellItems: Set<SellItem>): Order {
+        return createOrderService.createNewOrder(sellItems)
     }
 
     private fun createOrder(recipe: Recipe, amount: Int): Order {
