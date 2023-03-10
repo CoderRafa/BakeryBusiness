@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
@@ -125,8 +124,8 @@ class CreateOrderServiceImplTest {
         return createOrderService.createNewOrder(createRandomItemByRecipe(recipe), amount)
     }
 
-    private fun createRandomItemByRecipe(recipe: Recipe): Item {
-        return Item(
+    private fun createRandomItemByRecipe(recipe: Recipe): Recipy {
+        return Recipy(
             ('a'..'z').take(nextInt(1, 27)).joinToString(""),
             nextDouble(),
             ItemSize.values()[nextInt(0, ItemSize.values().size - 1)],

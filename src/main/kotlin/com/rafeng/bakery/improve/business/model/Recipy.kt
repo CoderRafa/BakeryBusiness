@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 /**
  * This class describes an item that can be produced in the bakery
  */
-data class Item(
+data class Recipy(
     val name: String,
     val weight: Double,
     val size: ItemSize,
