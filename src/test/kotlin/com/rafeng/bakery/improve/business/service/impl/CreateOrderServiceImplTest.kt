@@ -87,6 +87,8 @@ class CreateOrderServiceImplTest {
         assertTrue(sellItems.all { it.price == 10.0} )
         assertTrue(sellItems.all { it.item.recipe == recipe})
 
+        verify(priceService, times(10)).findPriceBy(recipe)
+
     }
 
     @Test
@@ -97,6 +99,8 @@ class CreateOrderServiceImplTest {
         val item = newOrder.sellItems[0].item
         val order = createOrderService.addItemTo(item, newOrder, -7)
         assertFalse(order.sellItems[0].amount == -2)
+
+        verify(priceService, times(2)).findPriceBy(recipe)
     }
 
     @Test
@@ -113,6 +117,8 @@ class CreateOrderServiceImplTest {
         createOrderService.delete(order, sellItems.first().item)
         assertEquals(90.0, order.total)
         assertEquals(9, order.sellItems.size)
+
+        verify(priceService, times(11)).findPriceBy(recipe)
 
     }
 
