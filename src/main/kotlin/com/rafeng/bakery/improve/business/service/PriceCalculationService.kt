@@ -8,5 +8,5 @@ import com.rafeng.bakery.improve.business.model.Recipy
  */
 interface PriceCalculationService {
     fun createPrice(price: Double, recipe: Recipe)
-    fun fillDepoElement(item: Recipy, amount: Int)
+    fun fillDepotElement(item: Recipe, amount: Int)
 }
