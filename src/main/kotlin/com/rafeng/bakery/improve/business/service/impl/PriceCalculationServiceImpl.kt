@@ -16,7 +16,7 @@ class PriceCalculationServiceImpl(
         }
     }
 
-    override fun fillDepoElement(item: Recipy, amount: Int) {
+    override fun fillDepotElement(item: Recipe, amount: Int) {
         TODO("Not yet implemented")
     }
 }
