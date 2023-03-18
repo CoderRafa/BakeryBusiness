@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.service.impl
+package com.old
 
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
+import com.rafeng.bakery.improve.business.service.impl.CreateOrderServiceImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
@@ -130,8 +131,8 @@ class CreateOrderServiceImplTest {
         return createOrderService.createNewOrder(createRandomItemByRecipe(recipe), amount)
     }
 
-    private fun createRandomItemByRecipe(recipe: Recipe): Recipy {
-        return Recipy(
+    private fun createRandomItemByRecipe(recipe: Recipe): Item {
+        return Item(
             ('a'..'z').take(nextInt(1, 27)).joinToString(""),
             nextDouble(),
             ItemSize.values()[nextInt(0, ItemSize.values().size - 1)],

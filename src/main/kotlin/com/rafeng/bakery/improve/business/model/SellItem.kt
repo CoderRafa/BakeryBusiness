@@ -6,14 +6,14 @@ import java.time.LocalDateTime
  * This class describes an item that can be sold in the bakery
  */
 data class SellItem(
-    val item: Recipy,
+    val item: Item,
     val price: Double,
     var amount: Int
 ) {
     var expirationDate: LocalDateTime = LocalDateTime.now()
 
     constructor(
-        item: Recipy,
+        item: Item,
         price: Double,
         amount: Int,
         expirationDate: LocalDateTime = LocalDateTime.now().plusDays(item.recipe.expirationPeriod.toLong())

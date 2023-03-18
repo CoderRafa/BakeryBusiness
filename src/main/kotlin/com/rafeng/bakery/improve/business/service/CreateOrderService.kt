@@ -1,6 +1,6 @@
 package com.rafeng.bakery.improve.business.service
 
-import com.rafeng.bakery.improve.business.model.Recipy
+import com.rafeng.bakery.improve.business.model.Item
 import com.rafeng.bakery.improve.business.model.Order
 import com.rafeng.bakery.improve.business.model.SellItem
 
@@ -15,7 +15,7 @@ interface CreateOrderService {
      * @param item - Which item we need to create an order with.
      * @param amount - How many items we want to add to an order.
      */
-    fun createNewOrder(item: Recipy, amount: Int): Order  // 1) First ordered element: I wanna this bun
+    fun createNewOrder(item: Item, amount: Int): Order  // 1) First ordered element: I wanna this bun
 
     /**
      * This function creates a new order from a given list of sell items.
@@ -29,12 +29,12 @@ interface CreateOrderService {
      * @param item - The item we want to add to an order
      * @param amount - Haw many of these items we would like to add to the order.
      */
-    fun addItemTo(item: Recipy, order: Order, amount: Int): Order // 2) Oh I wanna this cake too and then I wanna a tea
+    fun addItemTo(item: Item, order: Order, amount: Int): Order // 2) Oh I wanna this cake too and then I wanna a tea
 
     /**
      * This function deletes an item from an existing order in progress.
      * @param order - From which order we would like to delete this item.
      * @param item - Which item we would like to delete.
      */
-    fun delete(order: Order, item: Recipy)
+    fun delete(order: Order, item: Item)
 }
