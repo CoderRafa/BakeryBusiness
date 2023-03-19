@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.model.adc
+package com.rafeng.bakery.improve.business.model
 
 import com.rafeng.bakery.improve.business.model.Item
 import com.rafeng.bakery.improve.business.service.PriceCalculationService
