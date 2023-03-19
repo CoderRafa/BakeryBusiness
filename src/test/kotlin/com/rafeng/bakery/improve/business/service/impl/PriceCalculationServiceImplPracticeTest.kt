@@ -38,13 +38,13 @@ class PriceCalculationServiceImplPracticeTest {
     fun `Negative pass - price doesn't meet the requirements`() {
 
         priceCalculationService.createPrice(0.0, recipe)
-        assertTrue(priceService.findPriceBy(recipe) == null)
+        assertNull(priceService.findPriceBy(recipe))
     }
 
     @Test
     fun `Negative pass - empty description`() {
 
         priceCalculationService.createPrice(15.0, recipeWithNoDescription)
-        assertTrue(priceService.findPriceBy(recipe) == null)
+        assertNull(priceService.findPriceBy(recipe))
     }
 }
