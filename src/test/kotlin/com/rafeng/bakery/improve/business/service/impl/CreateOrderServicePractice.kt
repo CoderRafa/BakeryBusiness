@@ -7,6 +7,8 @@ import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.model.ToppingType.CREAM
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
+import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
+import com.rafeng.bakery.improve.business.util.createRecipe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -28,7 +30,7 @@ class CreateOrderServicePractice {
 
     private lateinit var createOrderService: CreateOrderService
 
-    private val recipe = Recipe("test", "description", 2, 3.0)
+    private val recipe = createRecipe()
 
     @BeforeEach
     fun setUp() {
@@ -61,22 +63,5 @@ class CreateOrderServicePractice {
 
     }
 
-    private fun createRandomItemByRecipe(recipe: Recipe): Item {
 
-        return Item(
-            ('a'..'z').take(nextInt(1,27)).joinToString ( "" ),
-            nextDouble(),
-            ItemSize.values()[nextInt(0, ItemSize.values().size - 1)],
-            STRONG,
-            SWEET,
-            listOf(ItemFilling(Filling("test", "description", JAM, SWEET), 10.0 )),
-            listOf(ItemTopping(Topping("test", "description", CREAM, SWEET), 10.0 )),
-            300,
-            listOf(),
-            false,
-            recipe,
-            LocalDateTime.now()
-        )
-
-    }
 }

@@ -11,11 +11,11 @@ class DefaultMenuServiceImpl(
     private val menu: Menu = Menu(mutableSetOf())
 ) : MenuService {
     override fun addItem(item: Item): Boolean {
-        TODO("Not yet implemented")
+        return menu.menuItems.add(item)
     }
 
     override fun deleteItem(item: Item): Boolean {
-        TODO("Not yet implemented")
+        return menu.menuItems.remove(item)
     }
 
     override fun getAll(): List<MenuItem> {
