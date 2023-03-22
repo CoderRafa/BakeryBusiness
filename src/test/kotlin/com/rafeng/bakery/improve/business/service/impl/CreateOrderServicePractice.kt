@@ -1,26 +1,20 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
-import com.rafeng.bakery.improve.business.model.FillingType.JAM
-import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
-import com.rafeng.bakery.improve.business.model.Taste.SWEET
-import com.rafeng.bakery.improve.business.model.ToppingType.CREAM
+import com.rafeng.bakery.improve.business.model.dto.Order
+import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
-import java.time.LocalDateTime
-import kotlin.random.Random.Default.nextDouble
-import kotlin.random.Random.Default.nextInt
 
 @ExtendWith(MockitoExtension::class)
 class CreateOrderServicePractice {

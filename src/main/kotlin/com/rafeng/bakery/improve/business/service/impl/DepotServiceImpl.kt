@@ -1,22 +1,24 @@
 package com.rafeng.bakery.improve.business.service.impl
 
-import com.rafeng.bakery.improve.business.model.Depot
-import com.rafeng.bakery.improve.business.model.Recipe
+import com.rafeng.bakery.improve.business.repository.DepotRepository
+import com.rafeng.bakery.improve.business.model.dto.Recipe
+import com.rafeng.bakery.improve.business.repository.delete
+import com.rafeng.bakery.improve.business.repository.save
 import com.rafeng.bakery.improve.business.service.DepotService
 
 class DepotServiceImpl(): DepotService {
 
-    val depot = Depot(mutableMapOf<Recipe, Int>())
+    private val depotRepository = DepotRepository()
     override fun addItem(recipe: Recipe, amount: Int): Boolean {
-        //return depot.items.put(recipe, amount)
+        return depotRepository.save(recipe, amount)
     }
 
-    override fun deleteItem(recipe: Recipe) {
-        depot.items.remove(recipe)
+    override fun deleteItem(recipe: Recipe): Boolean {
+        return depotRepository.delete(recipe)
     }
 
-    override fun gelAll() {
-
+    override fun gelAll(): Map<Recipe, Int> {
+        return depotRepository.items
     }
 
 }

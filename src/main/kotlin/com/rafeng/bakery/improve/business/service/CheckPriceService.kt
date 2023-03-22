@@ -1,6 +1,6 @@
 package com.rafeng.bakery.improve.business.service
 
-import com.rafeng.bakery.improve.business.model.Recipe
+import com.rafeng.bakery.improve.business.model.dto.Recipe
 
 /**
  * This interface can check if the price and recipe meet the requirements

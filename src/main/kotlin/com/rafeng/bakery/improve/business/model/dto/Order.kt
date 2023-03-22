@@ -1,4 +1,6 @@
-package com.rafeng.bakery.improve.business.model
+package com.rafeng.bakery.improve.business.model.dto
+
+import com.rafeng.bakery.improve.business.model.SellItem
 
 /**
  * This class describes and oder made by a customer

@@ -1,5 +1,11 @@
-package com.rafeng.bakery.improve.business.model
+package com.rafeng.bakery.improve.business.model.dto
 
+import com.rafeng.bakery.improve.business.model.Allergen
+import com.rafeng.bakery.improve.business.model.ItemFilling
+import com.rafeng.bakery.improve.business.model.ItemSize
+import com.rafeng.bakery.improve.business.model.ItemSmell
+import com.rafeng.bakery.improve.business.model.ItemTopping
+import com.rafeng.bakery.improve.business.model.Taste
 import java.time.LocalDateTime
 
 /**

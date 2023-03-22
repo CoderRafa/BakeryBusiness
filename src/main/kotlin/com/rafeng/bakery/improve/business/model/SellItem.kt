@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model
 
+import com.rafeng.bakery.improve.business.model.dto.Item
 import java.time.LocalDateTime
 
 /**

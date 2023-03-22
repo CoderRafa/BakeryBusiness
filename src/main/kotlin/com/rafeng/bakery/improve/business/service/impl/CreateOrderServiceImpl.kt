@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.service.impl
 
-import com.rafeng.bakery.improve.business.model.Item
-import com.rafeng.bakery.improve.business.model.Order
+import com.rafeng.bakery.improve.business.model.dto.Item
+import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService

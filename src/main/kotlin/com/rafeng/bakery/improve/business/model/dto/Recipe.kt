@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.model
+package com.rafeng.bakery.improve.business.model.dto
 
 /**
  * This class describes the recipe of an item

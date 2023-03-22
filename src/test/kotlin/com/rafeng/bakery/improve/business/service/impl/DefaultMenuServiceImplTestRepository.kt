@@ -1,7 +1,6 @@
 package com.rafeng.bakery.improve.business.service.impl
 
-import com.rafeng.bakery.improve.business.model.Item
-import com.rafeng.bakery.improve.business.model.MenuItem
+import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.service.MenuService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
@@ -16,7 +15,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
-class DefaultMenuServiceImplTest {
+class DefaultMenuServiceImplTestRepository {
 
     @Mock
     private lateinit var priceService: PriceService

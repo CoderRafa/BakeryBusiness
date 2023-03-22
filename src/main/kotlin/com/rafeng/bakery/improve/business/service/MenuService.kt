@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.service
 
-import com.rafeng.bakery.improve.business.model.Item
-import com.rafeng.bakery.improve.business.model.MenuItem
+import com.rafeng.bakery.improve.business.model.dto.Item
+import com.rafeng.bakery.improve.business.model.dto.MenuItem
 
 interface MenuService {
     fun addItem(item: Item): Boolean
