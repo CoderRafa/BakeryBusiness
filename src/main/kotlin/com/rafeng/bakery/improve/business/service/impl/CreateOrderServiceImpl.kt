@@ -3,6 +3,8 @@ package com.rafeng.bakery.improve.business.service.impl
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.SellItem
+import com.rafeng.bakery.improve.business.model.dto.PaymentType
+import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import java.time.LocalDateTime
@@ -17,7 +19,14 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
     /**
      * This function can create a new order from an item and its amount
      */
-    override fun createNewOrder(item: Item, amount: Int): Order {
+    override fun createNewOrder(
+        item: Item,
+        amount: Int,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+    ): Order {
 
         val price = priceService.findPriceBy(item.recipe)
 
@@ -29,17 +38,31 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
 //                    item.createDate.plusDays(item.recipe.expirationPeriod.toLong()),
                     amount
                 )
-            ), price * amount
+            ), price * amount,
+            createdDateAndTime,
+            discountAmount,
+            salesperson,
+            paymentType
         )
     }
 
     /**
      * This function can create a new order from a list of sellItems.
      */
-    override fun createNewOrder(sellItems: Set<SellItem>): Order {
+    override fun createNewOrder(
+        sellItems: Set<SellItem>,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+        ): Order {
         return Order(
             sellItems.toMutableList(),
-            countTotal(sellItems)
+            countTotal(sellItems),
+            createdDateAndTime,
+            discountAmount,
+            salesperson,
+            paymentType
         )
     }
 

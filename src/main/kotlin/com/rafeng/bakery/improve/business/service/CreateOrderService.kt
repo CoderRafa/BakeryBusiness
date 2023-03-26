@@ -3,6 +3,9 @@ package com.rafeng.bakery.improve.business.service
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.SellItem
+import com.rafeng.bakery.improve.business.model.dto.PaymentType
+import com.rafeng.bakery.improve.business.model.dto.Worker
+import java.time.LocalDateTime
 
 /**
  * This interface works with orders.
@@ -15,13 +18,25 @@ interface CreateOrderService {
      * @param item - Which item we need to create an order with.
      * @param amount - How many items we want to add to an order.
      */
-    fun createNewOrder(item: Item, amount: Int): Order  // 1) First ordered element: I wanna this bun
+    fun createNewOrder(item: Item,
+                       amount: Int,
+                       createdDateAndTime: LocalDateTime,
+                       discountAmount: Double,
+                       salesperson: Worker,
+                       paymentType: PaymentType
+    ): Order  // 1) First ordered element: I wanna this bun
 
     /**
      * This function creates a new order from a given list of sell items.
      * @param sellItems - The list of sell items we have to create an order with.
      */
-    fun createNewOrder(sellItems: Set<SellItem>): Order  // 3) Transfer SellItem to a new order
+    fun createNewOrder(
+        sellItems: Set<SellItem>,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+        ): Order  // 3) Transfer SellItem to a new order
 
     /**
      * This function adds an item to an existing order in progress.

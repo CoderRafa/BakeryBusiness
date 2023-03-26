@@ -4,9 +4,8 @@ import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
-import com.rafeng.bakery.improve.business.model.dto.Item
-import com.rafeng.bakery.improve.business.model.dto.Order
-import com.rafeng.bakery.improve.business.model.dto.Recipe
+import com.rafeng.bakery.improve.business.model.dto.*
+import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.CreateOrderServiceImpl
@@ -49,7 +48,14 @@ class CreateOrderServiceImplTest {
 
         `when`(priceService.findPriceBy(recipe)).thenReturn(10.0)
 
-        val newOrder = createOrder(recipe, 1)
+        val newOrder = createOrder(
+            recipe,
+            1,
+            LocalDateTime.now(),
+            5.0,
+            Worker("Lena", "Trofimova", SALESPERSON),
+            PaymentType.CASH
+            )
         assertThat(newOrder).isNotNull
         assertThat(newOrder).hasNoNullFieldsOrProperties()
         assertThat(newOrder.sellItems[0].item.recipe).isEqualTo(recipe)
@@ -63,7 +69,14 @@ class CreateOrderServiceImplTest {
     fun `Happy pass - add a new item to the existing order`() {
         doReturn(10.0).`when`(priceService).findPriceBy(recipe)
 
-        val newOrder = createOrder(recipe, 3)
+        val newOrder = createOrder(
+            recipe,
+            3,
+            LocalDateTime.now(),
+            5.0,
+            Worker("Lena", "Trofimova", SALESPERSON),
+            PaymentType.CASH
+            )
         val item = newOrder.sellItems[0].item
 
         val order = createOrderService.addItemTo(item, newOrder, 2)
@@ -99,7 +112,14 @@ class CreateOrderServiceImplTest {
     fun `Negative pass - adding negative amount`() {
         doReturn(10.0).`when`(priceService).findPriceBy(recipe)
 
-        val newOrder = createOrder(recipe, 5)
+        val newOrder = createOrder(
+            recipe,
+            5,
+            LocalDateTime.now(),
+            5.0,
+            Worker("Lena", "Trofimova", SALESPERSON),
+            PaymentType.CASH
+            )
         val item = newOrder.sellItems[0].item
         val order = createOrderService.addItemTo(item, newOrder, -7)
         assertFalse(order.sellItems[0].amount == -2)
@@ -116,7 +136,13 @@ class CreateOrderServiceImplTest {
                 priceService.findPriceBy(recipe)!!,
                 1
             ))}
-        val order = createOrderFromSellItems(sellItems)
+        val order = createOrderFromSellItems(
+            sellItems,
+            LocalDateTime.now(),
+            5.0,
+            Worker("Lena", "Trofimova", SALESPERSON),
+            PaymentType.CASH
+            )
 
         createOrderService.delete(order, sellItems.first().item)
         assertEquals(90.0, order.total)
@@ -126,15 +152,41 @@ class CreateOrderServiceImplTest {
 
     }
 
-    fun createOrderFromSellItems(sellItems: Set<SellItem>): Order {
-        return createOrderService.createNewOrder(sellItems)
+    fun createOrderFromSellItems(
+        sellItems: Set<SellItem>,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+    ): Order {
+        return createOrderService.createNewOrder(
+            sellItems,
+            createdDateAndTime,
+            discountAmount,
+            salesperson,
+            paymentType
+            )
     }
 
-    private fun createOrder(recipe: Recipe, amount: Int): Order {
-        return createOrderService.createNewOrder(createRandomItemByRecipe(recipe), amount)
+    private fun createOrder(
+        recipe: Recipe,
+        amount: Int,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+        ): Order {
+        return createOrderService.createNewOrder(
+            createRandomItemByRecipe(recipe),
+            amount,
+            createdDateAndTime,
+            discountAmount,
+            salesperson,
+            paymentType
+            )
     }
 
-    private fun createRandomItemByRecipe(recipe: Recipe): Item {
+    fun createRandomItemByRecipe(recipe: Recipe): Item {
         return Item(
             ('a'..'z').take(nextInt(1, 27)).joinToString(""),
             nextDouble(),

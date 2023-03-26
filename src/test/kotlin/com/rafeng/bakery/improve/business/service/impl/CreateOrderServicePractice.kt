@@ -1,8 +1,7 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
-import com.rafeng.bakery.improve.business.model.dto.Order
-import com.rafeng.bakery.improve.business.model.dto.Recipe
+import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
+import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
 class CreateOrderServicePractice {
@@ -41,7 +41,14 @@ class CreateOrderServicePractice {
 
         `when`(priceService.findPriceBy(recipe)).thenReturn(10.0)
 
-        val newOrder = createOrder(recipe, 1)
+        val newOrder = createOrder(
+            recipe,
+            1,
+            LocalDateTime.now(),
+            5.0,
+            Worker("Lena", "Trofimova", Position.SALESPERSON),
+            PaymentType.CASH
+            )
         assertThat(newOrder).isNotNull
         assertThat(newOrder).hasNoNullFieldsOrProperties()
         assertThat(newOrder.sellItems[0].item.recipe).isEqualTo(recipe)
@@ -51,9 +58,23 @@ class CreateOrderServicePractice {
         verify(priceService, times(1)).findPriceBy(recipe)
     }
 
-    fun createOrder(recipe: Recipe, amount: Int): Order {
+    fun createOrder(
+        recipe: Recipe,
+        amount: Int,
+        createdDateAndTime: LocalDateTime,
+        discountAmount: Double,
+        salesperson: Worker,
+        paymentType: PaymentType
+        ): Order {
 
-        return createOrderService.createNewOrder(createRandomItemByRecipe(recipe), amount)
+        return createOrderService.createNewOrder(
+            createRandomItemByRecipe(recipe),
+            amount,
+            createdDateAndTime,
+            discountAmount,
+            salesperson,
+            paymentType
+            )
 
     }
 
