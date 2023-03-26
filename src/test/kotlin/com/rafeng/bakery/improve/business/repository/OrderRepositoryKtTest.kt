@@ -25,25 +25,25 @@ class OrderRepositoryKtTest {
     @Test
     fun `Happy pass - an order was added to the list of orders`() {
         val order = createRandomOrder(recipe)
-        assertEquals(2,  orderRepo.orders.size)
+        assertEquals(2,  orderRepo.getAll().size)
         orderRepo.save(order)
-        assertEquals(3,  orderRepo.orders.size)
+        assertEquals(3,  orderRepo.getAll().size)
     }
 
     @Test
     fun `Happy pass - an order was successfully deleted`() {
         val order = createRandomOrder(recipe)
-        assertEquals(2,  orderRepo.orders.size)
+        assertEquals(2,  orderRepo.getAll().size)
         orderRepo.save(order)
-        assertEquals(3,  orderRepo.orders.size)
+        assertEquals(3,  orderRepo.getAll().size)
         orderRepo.delete(order)
-        assertEquals(2,  orderRepo.orders.size)
+        assertEquals(2,  orderRepo.getAll().size)
     }
 
     @Test
     fun `Happy pass - get all the orders from the mutable list`() {
         val order = createRandomOrder(recipe)
-        assertEquals(2, orderRepo.orders.size)
+        assertEquals(2, orderRepo.getAll().size)
         orderRepo.save(order)
         orderRepo.save(order)
         assertEquals(4, orderRepo.getAll().size)

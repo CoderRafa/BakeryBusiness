@@ -2,18 +2,18 @@ package com.rafeng.bakery.improve.business.repository
 
 import com.rafeng.bakery.improve.business.model.dto.Order
 
-data class OrderRepository (
+class OrderRepository (
     private val orders: MutableList<Order> = mutableListOf()
-)
+) {
+    fun save(order: Order): Boolean {
+        return this.orders.add(order)
+    }
 
-inline fun OrderRepository.save(order: Order): Boolean {
-    return this.orders.add(order)
-}
+    fun delete(order: Order): Boolean {
+        return this.orders.remove(order)
+    }
 
-fun OrderRepository.delete(order: Order): Boolean {
-    return this.orders.remove(order)
-}
-
-fun OrderRepository.getAll(): MutableList<Order> {
-    return this.orders
+    fun getAll(): MutableList<Order> {
+        return this.orders
+    }
 }
