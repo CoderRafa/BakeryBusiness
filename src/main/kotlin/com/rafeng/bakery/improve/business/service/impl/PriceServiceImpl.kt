@@ -1,6 +1,6 @@
 package com.rafeng.bakery.improve.business.service.impl
 
-import com.rafeng.bakery.improve.business.model.Recipe
+import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.PriceService
 
 /**
