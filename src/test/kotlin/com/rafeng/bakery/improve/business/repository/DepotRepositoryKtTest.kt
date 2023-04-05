@@ -25,14 +25,14 @@ class depotRepositoryKtTest {
     }
 
     @Test
-    fun `Happy pass - an item was added to the list of orders`() {
+    fun `Happy pass - an item was added to the depot`() {
         assertEquals(2,  depotRepo.getAll().size)
         depotRepo.save(recipe3, 6)
         assertEquals(3,  depotRepo.getAll().size)
     }
 
     @Test
-    fun `Happy pass - an order was successfully deleted`() {
+    fun `Happy pass - an item was successfully deleted`() {
         assertEquals(2,  depotRepo.getAll().size)
         depotRepo.save(recipe3, 4)
         assertEquals(3,  depotRepo.getAll().size)
@@ -41,7 +41,7 @@ class depotRepositoryKtTest {
     }
 
     @Test
-    fun `Happy pass - get all the orders from the mutable list`() {
+    fun `Happy pass - get all the items from depot`() {
         assertEquals(2, depotRepo.getAll().size)
         depotRepo.save(recipe3, 4)
         assertEquals(3, depotRepo.getAll().size)

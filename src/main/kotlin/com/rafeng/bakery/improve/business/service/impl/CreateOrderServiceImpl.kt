@@ -7,6 +7,7 @@ import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.service.CreateOrderService
 import com.rafeng.bakery.improve.business.service.PriceService
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.math.abs
 
@@ -15,6 +16,7 @@ import kotlin.math.abs
  * This class can add an item to an order.
  * This class can delete an item from an order.
  */
+@Service
 class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrderService {
     /**
      * This function can create a new order from an item and its amount
