@@ -6,9 +6,9 @@ import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
-import com.rafeng.bakery.improve.business.service.CreateOrderService
+import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
-import com.rafeng.bakery.improve.business.service.impl.CreateOrderServiceImpl
+import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
@@ -26,16 +26,16 @@ import kotlin.random.Random.Default.nextDouble
 import kotlin.random.Random.Default.nextInt
 
 @ExtendWith(MockitoExtension::class)
-class CreateOrderServiceImplTest {
+class OrderServiceImplTest {
 
     @Mock
     private lateinit var priceService: PriceService
-    private lateinit var createOrderService: CreateOrderService
+    private lateinit var orderService: OrderService
     private val recipe = Recipe("test", "super test", 2, 2.15)
 
     @BeforeEach
     fun setUp() {
-        createOrderService = CreateOrderServiceImpl(priceService)
+        orderService = OrderServiceImpl(priceService)
     }
 
     @AfterEach
@@ -79,7 +79,7 @@ class CreateOrderServiceImplTest {
             )
         val item = newOrder.sellItems[0].item
 
-        val order = createOrderService.addItemTo(item, newOrder, 2)
+        val order = orderService.addItemTo(item, newOrder, 2)
 
         assertThat(order.sellItems).size().isEqualTo(1)
         assertThat(order.sellItems).allMatch { it.item.recipe == recipe }
@@ -121,7 +121,7 @@ class CreateOrderServiceImplTest {
             PaymentType.CASH
             )
         val item = newOrder.sellItems[0].item
-        val order = createOrderService.addItemTo(item, newOrder, -7)
+        val order = orderService.addItemTo(item, newOrder, -7)
         assertFalse(order.sellItems[0].amount == -2)
 
         verify(priceService, times(2)).findPriceBy(recipe)
@@ -144,7 +144,7 @@ class CreateOrderServiceImplTest {
             PaymentType.CASH
             )
 
-        createOrderService.delete(order, sellItems.first().item)
+        orderService.delete(order, sellItems.first().item)
         assertEquals(90.0, order.total)
         assertEquals(9, order.sellItems.size)
 
@@ -159,7 +159,7 @@ class CreateOrderServiceImplTest {
         salesperson: Worker,
         paymentType: PaymentType
     ): Order {
-        return createOrderService.createNewOrder(
+        return orderService.createNewOrder(
             sellItems,
             createdDateAndTime,
             discountAmount,
@@ -176,7 +176,7 @@ class CreateOrderServiceImplTest {
         salesperson: Worker,
         paymentType: PaymentType
         ): Order {
-        return createOrderService.createNewOrder(
+        return orderService.createNewOrder(
             createRandomItemByRecipe(recipe),
             amount,
             createdDateAndTime,

@@ -2,7 +2,7 @@ package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.*
-import com.rafeng.bakery.improve.business.service.CreateOrderService
+import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
@@ -17,18 +17,18 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
-class CreateOrderServicePractice {
+class OrderServicePractice {
 
     @Mock
     private lateinit var priceService: PriceService
 
-    private lateinit var createOrderService: CreateOrderService
+    private lateinit var orderService: OrderService
 
     private val recipe = createRecipe()
 
     @BeforeEach
     fun setUp() {
-        createOrderService = CreateOrderServiceImpl(priceService)
+        orderService = OrderServiceImpl(priceService)
     }
 
     @AfterEach
@@ -67,7 +67,7 @@ class CreateOrderServicePractice {
         paymentType: PaymentType
         ): Order {
 
-        return createOrderService.createNewOrder(
+        return orderService.createNewOrder(
             createRandomItemByRecipe(recipe),
             amount,
             createdDateAndTime,

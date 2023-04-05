@@ -5,7 +5,8 @@ import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
-import com.rafeng.bakery.improve.business.service.CreateOrderService
+import com.rafeng.bakery.improve.business.repository.OrderRepository
+import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -17,7 +18,10 @@ import kotlin.math.abs
  * This class can delete an item from an order.
  */
 @Service
-class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrderService {
+class OrderServiceImpl(private val priceService: PriceService) : OrderService {
+
+    val orderRepo = OrderRepository()
+
     /**
      * This function can create a new order from an item and its amount
      */
@@ -47,6 +51,8 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
             paymentType
         )
     }
+
+
 
     /**
      * This function can create a new order from a list of sellItems.
@@ -103,5 +109,9 @@ class CreateOrderServiceImpl(private val priceService: PriceService) : CreateOrd
         val itemAmount: Int = order.sellItems.filter { it.item.name == item.name }[0].amount
         order.total -= priceService.findPriceBy(item.recipe)!! * itemAmount
         order.sellItems.removeIf { it.item == item }
+    }
+
+    override fun getAll(): List<Order> {
+
     }
 }

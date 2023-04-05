@@ -5,7 +5,7 @@ import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
-import com.rafeng.bakery.improve.business.service.CreateOrderService
+import com.rafeng.bakery.improve.business.service.OrderService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -15,11 +15,11 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/v1/order")
-class OrderController(val createOrderService: CreateOrderService) {
+class OrderController(val orderService: OrderService) {
 
     @PostMapping ("/basic")
     fun createNewOrder(order: OrderElementsRequest) {
-        createOrderService.createNewOrder(
+        orderService.createNewOrder(
             order.item,
             order.amount,
             order.createdDateAndTime,
@@ -31,7 +31,7 @@ class OrderController(val createOrderService: CreateOrderService) {
 
     @PostMapping("/sell-item")
     fun createNewOrderFromSellItems(order: OrderFromSellItemsElementsRequest) {
-        createOrderService.createNewOrder(
+        orderService.createNewOrder(
             order.sellItem,
             order.createdDateAndTime,
             order.discountAmount,
@@ -42,7 +42,7 @@ class OrderController(val createOrderService: CreateOrderService) {
 
     @PutMapping
     fun addItem(item: Item, order: Order, amount: Int) {
-        createOrderService.addItemTo(
+        orderService.addItemTo(
             item,
             order,
             amount
@@ -51,7 +51,7 @@ class OrderController(val createOrderService: CreateOrderService) {
 
     @DeleteMapping
     fun deleteItem(order: Order, item: Item) {
-        createOrderService.delete(
+        orderService.delete(
             order,
             item
         )

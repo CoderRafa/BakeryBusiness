@@ -12,7 +12,7 @@ import java.time.LocalDateTime
  * The interface can create a new order.
  * The interface can delete an order.
  */
-interface CreateOrderService {
+interface OrderService {
     /**
      * This function creates a new order.
      * @param item - Which item we need to create an order with.
@@ -52,4 +52,6 @@ interface CreateOrderService {
      * @param item - Which item we would like to delete.
      */
     fun delete(order: Order, item: Item)
+
+    fun getAll(): List<Order>
 }
