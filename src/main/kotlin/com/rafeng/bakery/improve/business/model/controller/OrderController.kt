@@ -9,6 +9,7 @@ import com.rafeng.bakery.improve.business.service.CreateOrderService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
@@ -17,8 +18,8 @@ import java.time.LocalDateTime
 @RequestMapping("/api/v1/order")
 class OrderController(val createOrderService: CreateOrderService) {
 
-    @PostMapping ("/basic")
-    fun createNewOrder(order: OrderElementsRequest) {
+    @PostMapping("/basic")
+    fun createNewOrder(@RequestBody order: OrderElementsRequest) {
         createOrderService.createNewOrder(
             order.item,
             order.amount,
@@ -26,11 +27,11 @@ class OrderController(val createOrderService: CreateOrderService) {
             order.discountAmount,
             order.salesperson,
             order.paymentType
-            )
+        )
     }
 
     @PostMapping("/sell-item")
-    fun createNewOrderFromSellItems(order: OrderFromSellItemsElementsRequest) {
+    fun createNewOrderFromSellItems(@RequestBody order: OrderFromSellItemsElementsRequest) {
         createOrderService.createNewOrder(
             order.sellItem,
             order.createdDateAndTime,
@@ -58,16 +59,16 @@ class OrderController(val createOrderService: CreateOrderService) {
     }
 
 
-
 }
-    class OrderElementsRequest(
-        val item: Item,
-        val amount: Int,
-        val createdDateAndTime: LocalDateTime,
-        val discountAmount: Double,
-        val salesperson: Worker,
-        val paymentType: PaymentType
-    )
+
+class OrderElementsRequest(
+    val item: Item,
+    val amount: Int,
+    val createdDateAndTime: LocalDateTime,
+    val discountAmount: Double,
+    val salesperson: Worker,
+    val paymentType: PaymentType
+)
 
 class OrderFromSellItemsElementsRequest(
     val sellItem: Set<SellItem>,
