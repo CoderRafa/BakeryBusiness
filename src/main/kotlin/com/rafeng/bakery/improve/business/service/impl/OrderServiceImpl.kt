@@ -1,8 +1,8 @@
 package com.rafeng.bakery.improve.business.service.impl
 
+import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
-import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.repository.OrderRepository
@@ -18,9 +18,10 @@ import kotlin.math.abs
  * This class can delete an item from an order.
  */
 @Service
-class OrderServiceImpl(private val priceService: PriceService) : OrderService {
-
-    val orderRepo = OrderRepository()
+class OrderServiceImpl(
+    private val priceService: PriceService,
+    private val orderRepository: OrderRepository
+) : OrderService {
 
     /**
      * This function can create a new order from an item and its amount
@@ -36,7 +37,7 @@ class OrderServiceImpl(private val priceService: PriceService) : OrderService {
 
         val price = priceService.findPriceBy(item.recipe)
 
-        return Order(
+        val order = Order(
             mutableListOf(
                 SellItem(
                     item,
@@ -50,6 +51,9 @@ class OrderServiceImpl(private val priceService: PriceService) : OrderService {
             salesperson,
             paymentType
         )
+
+        orderRepository.save(order)
+        return order
     }
 
 
@@ -111,7 +115,5 @@ class OrderServiceImpl(private val priceService: PriceService) : OrderService {
         order.sellItems.removeIf { it.item == item }
     }
 
-    override fun getAll(): List<Order> {
-
-    }
+    override fun getAll(): List<Order> = orderRepository.getAll()
 }

@@ -7,6 +7,7 @@ import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.service.OrderService
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,7 +19,10 @@ import java.time.LocalDateTime
 @RequestMapping("/api/v1/order")
 class OrderController(val orderService: OrderService) {
 
-    @PostMapping ("/basic")
+    @GetMapping
+    fun getAll() = orderService.getAll()
+
+    @PostMapping("/basic")
     fun createNewOrder(@RequestBody order: OrderElementsRequest) {
         orderService.createNewOrder(
             order.item,
