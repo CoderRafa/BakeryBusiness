@@ -9,6 +9,7 @@ import com.rafeng.bakery.improve.business.service.OrderService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
@@ -18,7 +19,7 @@ import java.time.LocalDateTime
 class OrderController(val orderService: OrderService) {
 
     @PostMapping ("/basic")
-    fun createNewOrder(order: OrderElementsRequest) {
+    fun createNewOrder(@RequestBody order: OrderElementsRequest) {
         orderService.createNewOrder(
             order.item,
             order.amount,
@@ -26,11 +27,11 @@ class OrderController(val orderService: OrderService) {
             order.discountAmount,
             order.salesperson,
             order.paymentType
-            )
+        )
     }
 
     @PostMapping("/sell-item")
-    fun createNewOrderFromSellItems(order: OrderFromSellItemsElementsRequest) {
+    fun createNewOrderFromSellItems(@RequestBody order: OrderFromSellItemsElementsRequest) {
         orderService.createNewOrder(
             order.sellItem,
             order.createdDateAndTime,
@@ -58,16 +59,16 @@ class OrderController(val orderService: OrderService) {
     }
 
 
-
 }
-    class OrderElementsRequest(
-        val item: Item,
-        val amount: Int,
-        val createdDateAndTime: LocalDateTime,
-        val discountAmount: Double,
-        val salesperson: Worker,
-        val paymentType: PaymentType
-    )
+
+class OrderElementsRequest(
+    val item: Item,
+    val amount: Int,
+    val createdDateAndTime: LocalDateTime,
+    val discountAmount: Double,
+    val salesperson: Worker,
+    val paymentType: PaymentType
+)
 
 class OrderFromSellItemsElementsRequest(
     val sellItem: Set<SellItem>,
