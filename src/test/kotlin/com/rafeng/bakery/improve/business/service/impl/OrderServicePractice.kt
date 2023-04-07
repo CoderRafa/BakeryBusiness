@@ -2,6 +2,7 @@ package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.*
+import com.rafeng.bakery.improve.business.repository.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
@@ -21,6 +22,7 @@ class OrderServicePractice {
 
     @Mock
     private lateinit var priceService: PriceService
+    private lateinit var orderRepository: OrderRepository
 
     private lateinit var orderService: OrderService
 
@@ -28,7 +30,7 @@ class OrderServicePractice {
 
     @BeforeEach
     fun setUp() {
-        orderService = OrderServiceImpl(priceService)
+        orderService = OrderServiceImpl(priceService, orderRepository)
     }
 
     @AfterEach

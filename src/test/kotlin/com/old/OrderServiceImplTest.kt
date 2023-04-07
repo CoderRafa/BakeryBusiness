@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
+import com.rafeng.bakery.improve.business.repository.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
@@ -31,11 +32,12 @@ class OrderServiceImplTest {
     @Mock
     private lateinit var priceService: PriceService
     private lateinit var orderService: OrderService
+    private lateinit var orderRepository: OrderRepository
     private val recipe = Recipe("test", "super test", 2, 2.15)
 
     @BeforeEach
     fun setUp() {
-        orderService = OrderServiceImpl(priceService)
+        orderService = OrderServiceImpl(priceService, orderRepository)
     }
 
     @AfterEach
