@@ -3,7 +3,6 @@ package com.rafeng.bakery.improve.business.service.impl
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.repository.OrderRepository
-import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
@@ -22,15 +22,17 @@ class OrderServicePractice {
 
     @Mock
     private lateinit var priceService: PriceService
+
+    @Mock
     private lateinit var orderRepository: OrderRepository
 
-    private lateinit var orderService: OrderService
+    @InjectMocks
+    private lateinit var orderService: OrderServiceImpl
 
     private val recipe = createRecipe()
 
     @BeforeEach
     fun setUp() {
-        orderService = OrderServiceImpl(priceService, orderRepository)
     }
 
     @AfterEach
@@ -60,14 +62,14 @@ class OrderServicePractice {
         verify(priceService, times(1)).findPriceBy(recipe)
     }
 
-    fun createOrder(
+    private fun createOrder(
         recipe: Recipe,
         amount: Int,
         createdDateAndTime: LocalDateTime,
         discountAmount: Double,
         salesperson: Worker,
         paymentType: PaymentType
-        ): Order {
+    ): Order {
 
         return orderService.createNewOrder(
             createRandomItemByRecipe(recipe),

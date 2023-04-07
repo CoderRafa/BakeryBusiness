@@ -7,7 +7,6 @@ import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.OrderRepository
-import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
 import org.assertj.core.api.Assertions.assertThat
@@ -16,6 +15,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.times
@@ -31,8 +31,12 @@ class OrderServiceImplTest {
 
     @Mock
     private lateinit var priceService: PriceService
-    private lateinit var orderService: OrderService
+
+    @Mock
     private lateinit var orderRepository: OrderRepository
+
+    @InjectMocks
+    private lateinit var orderService: OrderServiceImpl
     private val recipe = Recipe("test", "super test", 2, 2.15)
 
     @BeforeEach
