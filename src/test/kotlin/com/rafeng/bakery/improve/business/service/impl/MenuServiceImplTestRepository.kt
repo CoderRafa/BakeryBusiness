@@ -1,54 +1,51 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.dto.Item
-import com.rafeng.bakery.improve.business.service.MenuService
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
-class DefaultMenuServiceImplTestRepository {
+class MenuServiceImplTestRepository {
 
     @Mock
     private lateinit var priceService: PriceService
-    private lateinit var defaultMenuService: MenuService
+    private lateinit var defaultDefaultService: MenuServiceImpl
 
     @BeforeEach
     fun setUp() {
-        defaultMenuService = DefaultMenuServiceImpl(priceService)
+        defaultDefaultService = MenuServiceImpl(priceService)
     }
 
     @Test
     fun `Happy pass - an item was added to a menu`() {
         val item = createItemForTest()
-        assertTrue(defaultMenuService.addItem(item))
+        assertTrue(defaultDefaultService.addItem(item))
     }
 
     @Test
     fun `Negative pass - an item wasn't added to a menu`() {
         val item = createItemForTest()
         addItemForTest(item)
-        assertFalse(defaultMenuService.addItem(item))
+        assertFalse(defaultDefaultService.addItem(item))
     }
 
     @Test
     fun `Happy pass - an item was successfully deleted`() {
 
         val item = createItemForTest()
-        `when`(priceService.findPriceBy(item.recipe)).thenReturn(10.0)
 
         addItemForTest(item)
-        assertTrue(defaultMenuService.getAll().size == 1)
-        assertTrue(defaultMenuService.deleteItem(item))
-        assertTrue(defaultMenuService.getAll().isEmpty())
+        assertTrue(defaultDefaultService.getAll().size == 1)
+        assertTrue(defaultDefaultService.deleteItem(item))
+        assertTrue(defaultDefaultService.getAll().isEmpty())
     }
 
     @Test
@@ -57,20 +54,20 @@ class DefaultMenuServiceImplTestRepository {
         val item_2 = createItemForTest()
         addItemForTest(item_1)
         item_1 = item_2
-        assertFalse(defaultMenuService.deleteItem(item_1))
+        assertFalse(defaultDefaultService.deleteItem(item_1))
     }
 
     @Test
     fun `Happy pass - gets all elements`() {
         val items = mutableListOf<Item>()
-            (1..7).forEach { items.add(createItemForTest()) }
+        (1..7).forEach { items.add(createItemForTest()) }
         for (item in items) {
             `when`(priceService.findPriceBy(item.recipe)).thenReturn(10.0)
             addItemForTest(item)
         }
-        assertTrue(defaultMenuService.getAll().size == 7)
-        assertTrue(defaultMenuService.getAll().all { it.price == 10.0 } )
-        assertTrue(defaultMenuService.getAll().map { it.item }.containsAll(items))
+        assertTrue(defaultDefaultService.getAllMenuItems().size == 7)
+        assertTrue(defaultDefaultService.getAllMenuItems().all { it.price == 10.0 })
+        assertTrue(defaultDefaultService.getAllMenuItems().map { it.item }.containsAll(items))
     }
 
     @Test
@@ -83,14 +80,14 @@ class DefaultMenuServiceImplTestRepository {
         }
         val deletedItems = items.take(3)
         for (item in deletedItems) {
-            defaultMenuService.deleteItem(item)
+            defaultDefaultService.deleteItem(item)
         }
 
-       assertFalse(defaultMenuService.getAll().map { it.item }.containsAll(deletedItems))
+        assertFalse(defaultDefaultService.getAllMenuItems().map { it.item }.containsAll(deletedItems))
     }
 
     fun addItemForTest(item: Item) {
-        defaultMenuService.addItem(item)
+        defaultDefaultService.addItem(item)
     }
 
     fun createItemForTest(): Item {

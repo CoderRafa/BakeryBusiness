@@ -5,7 +5,7 @@ import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
-import com.rafeng.bakery.improve.business.repository.OrderRepository
+import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.stereotype.Service

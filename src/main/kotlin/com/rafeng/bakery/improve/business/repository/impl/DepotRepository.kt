@@ -1,6 +1,5 @@
-package com.rafeng.bakery.improve.business.repository
+package com.rafeng.bakery.improve.business.repository.impl
 
-import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 
 /**

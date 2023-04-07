@@ -6,7 +6,7 @@ import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
-import com.rafeng.bakery.improve.business.repository.OrderRepository
+import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
 import org.assertj.core.api.Assertions.assertThat

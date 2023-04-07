@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.repository
+package com.rafeng.bakery.improve.business.repository.impl
 
 import com.rafeng.bakery.improve.business.model.dto.Order
 import org.springframework.stereotype.Component

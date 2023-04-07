@@ -2,7 +2,7 @@ package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.*
-import com.rafeng.bakery.improve.business.repository.OrderRepository
+import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
