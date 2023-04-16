@@ -4,12 +4,14 @@ import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.MenuItem
 import com.rafeng.bakery.improve.business.repository.impl.MenuRepository
 import com.rafeng.bakery.improve.business.service.PriceService
+import org.springframework.stereotype.Service
 
 /**
  * This class can add an Item to a menu
  * This class can delete an Item from a menu
  * This class can get all the items in a menu
  */
+@Service
 class MenuServiceImpl(
     private val priceService: PriceService,
     private val menuRepository: MenuRepository = MenuRepository()

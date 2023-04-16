@@ -2,11 +2,13 @@ package com.rafeng.bakery.improve.business.model.dto
 
 import com.rafeng.bakery.improve.business.model.SellItem
 import java.time.LocalDateTime
+import java.util.UUID
 
 /**
  * This class describes an oder made by a customer
  */
 data class Order(
+    val id: UUID = UUID.randomUUID(),
     val sellItems: MutableList<SellItem>,
     var total: Double,
     val createdDateAndTime: LocalDateTime,

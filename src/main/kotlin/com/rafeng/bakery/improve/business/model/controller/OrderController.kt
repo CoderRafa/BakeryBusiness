@@ -8,12 +8,14 @@ import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.service.OrderService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -45,9 +47,9 @@ class OrderController(val orderService: OrderService) {
         )
     }
 
-    @PutMapping
-    fun addItem(item: Item, order: Order, amount: Int) {
-        orderService.addItemTo(
+    @PutMapping("/{uuid}")
+    fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) {
+        orderService.addItemWithAmount(
             item,
             order,
             amount
@@ -55,7 +57,7 @@ class OrderController(val orderService: OrderService) {
     }
 
     @DeleteMapping
-    fun deleteItem(order: Order, item: Item) {
+    fun deleteItem(@RequestBody order: Order, item: Item) {
         orderService.delete(
             order,
             item
@@ -79,4 +81,9 @@ class OrderFromSellItemsElementsRequest(
     val discountAmount: Double,
     val salesperson: Worker,
     val paymentType: PaymentType
+)
+
+data class ItemWithAmountRequest(
+    val item: Item,
+    val amount: Int
 )

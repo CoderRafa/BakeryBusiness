@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.service.DefaultService
 /**
  * This abstract class can add, delete and get items of a type that we set to and from a repository of a type that we have set
  */
+
 abstract class DefaultServiceImpl<T, R : DefaultRepository<T>>(open val repository: R) : DefaultService<T> {
     /**
      * This function can add an item of a type that we have set to a repository of the same type

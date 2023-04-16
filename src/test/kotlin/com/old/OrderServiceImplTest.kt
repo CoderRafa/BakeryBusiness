@@ -85,7 +85,7 @@ class OrderServiceImplTest {
             )
         val item = newOrder.sellItems[0].item
 
-        val order = orderService.addItemTo(item, newOrder, 2)
+        val order = orderService.addItemWithAmount(item, newOrder, 2)
 
         assertThat(order.sellItems).size().isEqualTo(1)
         assertThat(order.sellItems).allMatch { it.item.recipe == recipe }
@@ -127,7 +127,7 @@ class OrderServiceImplTest {
             PaymentType.CASH
             )
         val item = newOrder.sellItems[0].item
-        val order = orderService.addItemTo(item, newOrder, -7)
+        val order = orderService.addItemWithAmount(item, newOrder, -7)
         assertFalse(order.sellItems[0].amount == -2)
 
         verify(priceService, times(2)).findPriceBy(recipe)

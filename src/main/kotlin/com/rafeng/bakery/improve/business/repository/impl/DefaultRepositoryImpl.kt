@@ -5,7 +5,7 @@ import com.rafeng.bakery.improve.business.repository.DefaultRepository
 /**
  * This abstract class can save, delete and get items from and to a MutableCollection of a type that we can set
  */
-abstract class DefaultRepositoryImpl<T>(open val accumulator: MutableCollection<T>) : DefaultRepository<T> {
+abstract class DefaultRepositoryImpl<T>(open val accumulator: MutableCollection<T>): DefaultRepository<T> {
     /**
      * This function can save an item to a MutableCollection of a type that we have set
      */
