@@ -1,8 +1,9 @@
 package com.rafeng.bakery.improve.business.model.dto
 
 import com.rafeng.bakery.improve.business.model.SellItem
+import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 /**
  * This class describes an oder made by a customer
@@ -17,27 +18,15 @@ data class Order(
     val paymentType: PaymentType
 )
 
-/**
- * This class describes a worker of the bakery
- */
-data class Worker(
-    val name: String,
-    val lastname: String,
-    val position: Position
-)
+fun Order.updateTotal() =
 
-/**
- * This class describes the work position in the bakery
- */
-enum class Position {
-    SALESPERSON, MANAGER, BAKER
-}
-
-/**
- * This class describes the payment methods available for purchasing goods from the bakery
- */
-enum class PaymentType {
-    CASH, CARD, ONLINE_WALLET
-}
-
-
+fun Order.addOrModifySellItem(price: Double, itemWithAmountRequest: ItemWithAmountRequest) =
+    sellItems
+        .firstOrNull { it.item == itemWithAmountRequest.item }
+        ?.apply { this.amount = itemWithAmountRequest.amount } ?: sellItems.add(
+        SellItem(
+            itemWithAmountRequest.item,
+            price,
+            itemWithAmountRequest.amount
+        )
+    )

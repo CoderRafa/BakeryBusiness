@@ -6,13 +6,13 @@ import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
+import com.rafeng.bakery.improve.business.model.dto.addOrModifySellItem
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.UUID
-import kotlin.math.abs
+import java.util.*
 
 /**
  * This class can creates an order.
@@ -60,7 +60,6 @@ class OrderServiceImpl(
     }
 
 
-
     /**
      * This function can create a new order from a list of sellItems.
      */
@@ -70,7 +69,7 @@ class OrderServiceImpl(
         discountAmount: Double,
         salesperson: Worker,
         paymentType: PaymentType
-        ): Order {
+    ): Order {
         return Order(
             sellItems.toMutableList(),
             countTotal(sellItems),
@@ -92,9 +91,8 @@ class OrderServiceImpl(
      * This function can add an item to an existing order in progress.
      */
     override fun addItemWithAmount(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order {
-        getOrderByUuid(uuid).sellItems.add(itemWithAmountRequest.item, 20.0, itemWithAmountRequest.amount)
-
-
+        val order = getOrderByUuid(uuid)
+        order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe)!!, itemWithAmountRequest)
         return order
     }
 
@@ -110,5 +108,4 @@ class OrderServiceImpl(
     override fun getAll(): List<Order> = orderRepository.getAll().toList()
 
     fun getOrderByUuid(uuid: UUID) = orderRepository.getAll().first { it.id == uuid }
-
 }

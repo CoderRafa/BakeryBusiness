@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -48,13 +48,12 @@ class OrderController(val orderService: OrderService) {
     }
 
     @PutMapping("/{uuid}")
-    fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) {
+    fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) =
         orderService.addItemWithAmount(
-            item,
-            order,
-            amount
+            uuid,
+            itemWithAmountRequest
         )
-    }
+
 
     @DeleteMapping
     fun deleteItem(@RequestBody order: Order, item: Item) {
@@ -63,7 +62,7 @@ class OrderController(val orderService: OrderService) {
             item
         )
     }
-    
+
 }
 
 class OrderElementsRequest(
