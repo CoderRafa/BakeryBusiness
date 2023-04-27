@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextDouble
 import kotlin.random.Random.Default.nextInt
@@ -66,6 +67,7 @@ class OrderRepositoryKtTest {
 
 fun createRandomOrder(recipe: Recipe): Order {
     return Order(
+        UUID.randomUUID(),
         mutableListOf(
             createRandomSellItem(recipe),
             createRandomSellItem(recipe),

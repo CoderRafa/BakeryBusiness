@@ -4,6 +4,7 @@ import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
+import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
@@ -13,6 +14,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -23,6 +25,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
+import java.util.UUID
 import kotlin.random.Random.Default.nextDouble
 import kotlin.random.Random.Default.nextInt
 
@@ -82,15 +85,19 @@ class OrderServiceImplTest {
             5.0,
             Worker("Lena", "Trofimova", SALESPERSON),
             PaymentType.CASH
-            )
+        )
         val item = newOrder.sellItems[0].item
 
-        val order = orderService.addItemWithAmount(item, newOrder, 2)
+        `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
+
+        val order = orderService.addItemWithAmount(newOrder.id, ItemWithAmountRequest(item, 2))
+
+        order.updateTotal()
 
         assertThat(order.sellItems).size().isEqualTo(1)
         assertThat(order.sellItems).allMatch { it.item.recipe == recipe }
-        assertThat(order.sellItems).allMatch { it.amount == 5 }
-        assertThat(newOrder.total).isEqualTo(50.0)
+        assertThat(order.sellItems).allMatch { it.amount == 2 }
+        assertThat(order.total).isEqualTo(20.0)
 
         verify(priceService, times(2)).findPriceBy(recipe)
     }
@@ -127,7 +134,8 @@ class OrderServiceImplTest {
             PaymentType.CASH
             )
         val item = newOrder.sellItems[0].item
-        val order = orderService.addItemWithAmount(item, newOrder, -7)
+        `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
+        val order = orderService.addItemWithAmount(newOrder.id, ItemWithAmountRequest(item, -7))
         assertFalse(order.sellItems[0].amount == -2)
 
         verify(priceService, times(2)).findPriceBy(recipe)

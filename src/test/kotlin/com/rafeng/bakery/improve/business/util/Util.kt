@@ -1,9 +1,11 @@
 package com.rafeng.bakery.improve.business.util
 
 import com.rafeng.bakery.improve.business.model.*
-import com.rafeng.bakery.improve.business.model.dto.Item
-import com.rafeng.bakery.improve.business.model.dto.Recipe
+import com.rafeng.bakery.improve.business.model.dto.*
+import com.rafeng.bakery.improve.business.model.dto.PaymentType.CASH
+import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.random.Random
 
 fun createRandomItemByRecipe(recipe: Recipe): Item {
@@ -26,3 +28,45 @@ fun createRandomItemByRecipe(recipe: Recipe): Item {
 }
 
 fun createRecipe() = Recipe("test", "description", 2, 3.0)
+
+fun createRandomOrder(): Order {
+    val order = Order(
+        UUID.randomUUID(),
+        mutableListOf(),
+        0.0,
+        LocalDateTime.now(),
+        0.0,
+        Worker(
+            "Ivan",
+            "Ivanov",
+            SALESPERSON
+        ),
+        CASH
+    )
+
+    return order
+}
+
+fun createRandomOrderWithSellitems(): Order {
+    val order = Order(
+        UUID.randomUUID(),
+        mutableListOf(
+                SellItem(
+                    createRandomItemByRecipe(createRecipe()),
+                    20.0,
+                    10
+                )
+        ),
+        0.0,
+        LocalDateTime.now(),
+        0.0,
+        Worker(
+            "Ivan",
+            "Ivanov",
+            SALESPERSON
+        ),
+        CASH
+    )
+
+    return order
+}

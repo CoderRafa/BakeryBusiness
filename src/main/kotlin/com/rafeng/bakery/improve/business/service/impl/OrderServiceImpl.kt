@@ -40,6 +40,7 @@ class OrderServiceImpl(
         val price = priceService.findPriceBy(item.recipe)
 
         val order = Order(
+            UUID.randomUUID(),
             mutableListOf(
                 SellItem(
                     item,
@@ -71,6 +72,7 @@ class OrderServiceImpl(
         paymentType: PaymentType
     ): Order {
         return Order(
+            UUID.randomUUID(),
             sellItems.toMutableList(),
             countTotal(sellItems),
             createdDateAndTime,

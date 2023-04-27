@@ -18,7 +18,7 @@ data class Order(
     val paymentType: PaymentType
 )
 
-fun Order.updateTotal() =
+fun Order.updateTotal() = this.let { it.total = it.sellItems.fold(0.0) { acc: Double, sellItem: SellItem -> acc + sellItem.amount * sellItem.price} }
 
 fun Order.addOrModifySellItem(price: Double, itemWithAmountRequest: ItemWithAmountRequest) =
     sellItems
