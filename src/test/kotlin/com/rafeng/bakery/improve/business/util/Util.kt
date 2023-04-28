@@ -16,6 +16,7 @@ import com.rafeng.bakery.improve.business.model.dto.PaymentType.CASH
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.model.dto.Worker
+import com.rafeng.bakery.improve.business.model.dto.updateTotal
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.random.Random
@@ -53,6 +54,7 @@ fun createRandomOrder(): Order = Order(
 
 fun Order.sellItems(initialize: (MutableList<SellItem>) -> Unit): Order {
     initialize(this.sellItems)
+    this.updateTotal()
     return this
 }
 

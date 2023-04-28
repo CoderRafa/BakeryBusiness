@@ -7,11 +7,10 @@ import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRandomOrder
-import com.rafeng.bakery.improve.business.util.createRecipe
 import com.rafeng.bakery.improve.business.util.discountAmount
 import com.rafeng.bakery.improve.business.util.salesperson
 import com.rafeng.bakery.improve.business.util.sellItems
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,12 +36,12 @@ class OrderKtTest {
 
     @BeforeEach
     fun setUp() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
         orderService = OrderServiceImpl(priceService, orderRepository)
     }
 
     @Test
     fun `Happy pass - updateTotal updates the value of total`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
         val order = createOrderForHappyPassWithSellItemTest()
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(order))
 
@@ -64,7 +63,6 @@ class OrderKtTest {
 
     @Test
     fun `Happy pass - add sellItem to order without sellItems`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
         val order = createRandomOrder()
         doReturn(mutableListOf(order)).`when`(orderRepository).getAll()
 
@@ -75,10 +73,11 @@ class OrderKtTest {
 
     @Test
     fun addOrModifySellItem() {
-        val order = createRandomOrder()
-        val item = createRandomItemByRecipe(createRecipe())
-        order.addOrModifySellItem(12.0, ItemWithAmountRequest(item, 3))
-        Assertions.assertThat(order.sellItems.map { it.item }).contains(item)
-
+        val order = createOrderForHappyPassWithSellItemTest()
+        assertThat(order.total).isEqualTo(10.0)
+        order.addOrModifySellItem(priceService.findPriceBy(recipe)!!, ItemWithAmountRequest(order.sellItems[0].item, 3))
+        assertThat(order.sellItems.map { it.item }).contains(order.sellItems[0].item)
+        assertThat(order.sellItems[0].amount).isEqualTo(3)
+        assertThat(order.total).isEqualTo(30.0)
     }
 }

@@ -22,13 +22,17 @@ fun Order.updateTotal() = this.let {
     it.total = it.sellItems.fold(0.0) { acc: Double, sellItem: SellItem -> acc + sellItem.amount * sellItem.price }
 }
 
-fun Order.addOrModifySellItem(price: Double, itemWithAmountRequest: ItemWithAmountRequest) =
+fun Order.addOrModifySellItem(price: Double, itemWithAmountRequest: ItemWithAmountRequest) {
     sellItems
         .firstOrNull { it.item == itemWithAmountRequest.item }
-        ?.apply { this.amount = itemWithAmountRequest.amount } ?: sellItems.add(
+        ?.apply {
+            this.amount = itemWithAmountRequest.amount
+        } ?: sellItems.add(
         SellItem(
             itemWithAmountRequest.item,
             price,
             itemWithAmountRequest.amount
         )
     )
+    this.updateTotal()
+}

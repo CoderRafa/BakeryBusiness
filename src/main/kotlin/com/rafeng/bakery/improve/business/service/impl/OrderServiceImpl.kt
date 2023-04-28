@@ -7,7 +7,6 @@ import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.model.dto.addOrModifySellItem
-import com.rafeng.bakery.improve.business.model.dto.updateTotal
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
@@ -96,7 +95,6 @@ class OrderServiceImpl(
     override fun addItemWithAmountOrMidify(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order {
         val order = getOrderByUuid(uuid)
         order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe)!!, itemWithAmountRequest)
-        order.updateTotal()
         return order
     }
 
