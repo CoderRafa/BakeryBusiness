@@ -1,22 +1,24 @@
 package com.rafeng.bakery.improve.business.model.dto
 
+import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRandomOrder
-import com.rafeng.bakery.improve.business.util.createRandomOrderWithSellitems
 import com.rafeng.bakery.improve.business.util.createRecipe
+import com.rafeng.bakery.improve.business.util.discountAmount
+import com.rafeng.bakery.improve.business.util.randomOrder
+import com.rafeng.bakery.improve.business.util.salesperson
+import com.rafeng.bakery.improve.business.util.sellItems
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
@@ -31,6 +33,7 @@ class OrderKtTest {
 
     @InjectMocks
     private lateinit var orderService: OrderServiceImpl
+
     private val recipe = Recipe("test", "super test", 2, 2.15)
 
     @BeforeEach
@@ -42,8 +45,19 @@ class OrderKtTest {
     fun `Happy pass - updateTotal updates the value of total`() {
         doReturn(10.0).`when`(priceService).findPriceBy(recipe)
 
-        val order = createRandomOrderWithSellitems()
+
+        val order = randomOrder()
+            .sellItems {
+                it.add(SellItem(createRandomItemByRecipe(recipe), 10.0, 1))
+            }.discountAmount {
+                10.0
+            }.salesperson {
+                it.name = "Vasya"
+                it.lastname = "Testovich"
+            }
+
         val item = order.sellItems[0].item
+        item.recipe = recipe
 
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(order))
 

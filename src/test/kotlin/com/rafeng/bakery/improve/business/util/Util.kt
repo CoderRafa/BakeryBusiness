@@ -1,9 +1,21 @@
 package com.rafeng.bakery.improve.business.util
 
-import com.rafeng.bakery.improve.business.model.*
-import com.rafeng.bakery.improve.business.model.dto.*
+import com.rafeng.bakery.improve.business.model.Filling
+import com.rafeng.bakery.improve.business.model.FillingType
+import com.rafeng.bakery.improve.business.model.ItemFilling
+import com.rafeng.bakery.improve.business.model.ItemSize
+import com.rafeng.bakery.improve.business.model.ItemSmell
+import com.rafeng.bakery.improve.business.model.ItemTopping
+import com.rafeng.bakery.improve.business.model.SellItem
+import com.rafeng.bakery.improve.business.model.Taste
+import com.rafeng.bakery.improve.business.model.Topping
+import com.rafeng.bakery.improve.business.model.ToppingType
+import com.rafeng.bakery.improve.business.model.dto.Item
+import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType.CASH
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
+import com.rafeng.bakery.improve.business.model.dto.Recipe
+import com.rafeng.bakery.improve.business.model.dto.Worker
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.random.Random
@@ -47,15 +59,15 @@ fun createRandomOrder(): Order {
     return order
 }
 
-fun createRandomOrderWithSellitems(): Order {
+fun createRandomOrderWithSellItems(): Order {
     val order = Order(
         UUID.randomUUID(),
         mutableListOf(
-                SellItem(
-                    createRandomItemByRecipe(createRecipe()),
-                    20.0,
-                    10
-                )
+            SellItem(
+                createRandomItemByRecipe(createRecipe()),
+                20.0,
+                10
+            )
         ),
         0.0,
         LocalDateTime.now(),
@@ -69,4 +81,35 @@ fun createRandomOrderWithSellitems(): Order {
     )
 
     return order
+}
+
+fun randomOrder(): Order = Order(
+    UUID.randomUUID(),
+    mutableListOf(),
+    0.0,
+    LocalDateTime.now(),
+    0.0,
+    Worker(
+        "Ivan",
+        "Ivanov",
+        SALESPERSON
+    ),
+    CASH
+)
+
+fun Order.sellItems(initialize: (MutableList<SellItem>) -> Unit): Order {
+    initialize(this.sellItems)
+    return this
+}
+
+fun Order.discountAmount(initialize: () -> Double): Order {
+    this.discountAmount = initialize()
+    return this
+}
+
+fun Order.salesperson(initialize: (Worker) -> Unit): Order {
+    val salesPerson = Worker("", "", SALESPERSON)
+    initialize(salesPerson)
+    this.salesperson = salesperson
+    return this
 }

@@ -1,6 +1,15 @@
 package com.rafeng.bakery.improve.business.model.dto
 
-import com.rafeng.bakery.improve.business.model.*
+import com.rafeng.bakery.improve.business.model.Allergen
+import com.rafeng.bakery.improve.business.model.Filling
+import com.rafeng.bakery.improve.business.model.FillingType
+import com.rafeng.bakery.improve.business.model.ItemFilling
+import com.rafeng.bakery.improve.business.model.ItemSize
+import com.rafeng.bakery.improve.business.model.ItemSmell
+import com.rafeng.bakery.improve.business.model.ItemTopping
+import com.rafeng.bakery.improve.business.model.Taste
+import com.rafeng.bakery.improve.business.model.Topping
+import com.rafeng.bakery.improve.business.model.ToppingType
 import java.time.LocalDateTime
 
 /**
@@ -36,7 +45,7 @@ data class Item(
     val calories: Int,
     val allergens: List<Allergen> = listOf(Allergen.WALNUT),
     val isVegan: Boolean = false,
-    val recipe: Recipe
+    var recipe: Recipe
 ) {
     var createDate: LocalDateTime = LocalDateTime.now()
 

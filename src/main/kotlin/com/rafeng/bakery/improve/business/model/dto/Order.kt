@@ -13,12 +13,14 @@ data class Order(
     val sellItems: MutableList<SellItem>,
     var total: Double,
     val createdDateAndTime: LocalDateTime,
-    val discountAmount: Double,
-    val salesperson: Worker,
+    var discountAmount: Double,
+    var salesperson: Worker,
     val paymentType: PaymentType
 )
 
-fun Order.updateTotal() = this.let { it.total = it.sellItems.fold(0.0) { acc: Double, sellItem: SellItem -> acc + sellItem.amount * sellItem.price} }
+fun Order.updateTotal() = this.let {
+    it.total = it.sellItems.fold(0.0) { acc: Double, sellItem: SellItem -> acc + sellItem.amount * sellItem.price }
+}
 
 fun Order.addOrModifySellItem(price: Double, itemWithAmountRequest: ItemWithAmountRequest) =
     sellItems
