@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model.controller
 
+import com.rafeng.bakery.improve.business.model.dto.AddItemRequest
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.DepotService
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -28,7 +29,3 @@ class DepotController(val depotService: DepotService) {
     }
 }
 
-class AddItemRequest(
-    val recipe: Recipe,
-    val amount: Int
-)

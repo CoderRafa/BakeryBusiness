@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model.controller
 
+import com.rafeng.bakery.improve.business.model.dto.CreatePriceForRecipeRequest
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,7 +21,3 @@ class PriceController(val priceService: PriceService) {
     fun getPriceForRecipe(findPriceRequest: Recipe) = priceService.findPriceBy(findPriceRequest)
 }
 
-class CreatePriceForRecipeRequest(
-    val price: Double,
-    val recipe: Recipe
-)
