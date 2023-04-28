@@ -14,7 +14,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -25,7 +24,6 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
-import java.util.UUID
 import kotlin.random.Random.Default.nextDouble
 import kotlin.random.Random.Default.nextInt
 
@@ -90,7 +88,7 @@ class OrderServiceImplTest {
 
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
 
-        val order = orderService.addItemWithAmount(newOrder.id, ItemWithAmountRequest(item, 2))
+        val order = orderService.addItemWithAmountOrMidify(newOrder.id, ItemWithAmountRequest(item, 2))
 
         order.updateTotal()
 
@@ -135,7 +133,7 @@ class OrderServiceImplTest {
             )
         val item = newOrder.sellItems[0].item
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
-        val order = orderService.addItemWithAmount(newOrder.id, ItemWithAmountRequest(item, -7))
+        val order = orderService.addItemWithAmountOrMidify(newOrder.id, ItemWithAmountRequest(item, -7))
         assertFalse(order.sellItems[0].amount == -2)
 
         verify(priceService, times(2)).findPriceBy(recipe)

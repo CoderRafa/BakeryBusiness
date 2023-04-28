@@ -1,9 +1,9 @@
 package com.rafeng.bakery.improve.business.service
 
-import com.rafeng.bakery.improve.business.model.dto.Item
-import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
+import com.rafeng.bakery.improve.business.model.dto.Item
+import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import java.time.LocalDateTime
@@ -46,7 +46,10 @@ interface OrderService {
      * @param item - The item we want to add to an order
      * @param amount - Haw many of these items we would like to add to the order.
      */
-    fun addItemWithAmount(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order // 2) Oh I wanna this cake too and then I wanna a tea
+    fun addItemWithAmountOrMidify(
+        uuid: UUID,
+        itemWithAmountRequest: ItemWithAmountRequest
+    ): Order // 2) Oh I wanna this cake too and then I wanna a tea
 
     /**
      * This function deletes an item from an existing order in progress.

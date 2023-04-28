@@ -9,7 +9,6 @@ import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRandomOrder
 import com.rafeng.bakery.improve.business.util.createRecipe
 import com.rafeng.bakery.improve.business.util.discountAmount
-import com.rafeng.bakery.improve.business.util.randomOrder
 import com.rafeng.bakery.improve.business.util.salesperson
 import com.rafeng.bakery.improve.business.util.sellItems
 import org.assertj.core.api.Assertions
@@ -44,27 +43,34 @@ class OrderKtTest {
     @Test
     fun `Happy pass - updateTotal updates the value of total`() {
         doReturn(10.0).`when`(priceService).findPriceBy(recipe)
-
-
-        val order = randomOrder()
-            .sellItems {
-                it.add(SellItem(createRandomItemByRecipe(recipe), 10.0, 1))
-            }.discountAmount {
-                10.0
-            }.salesperson {
-                it.name = "Vasya"
-                it.lastname = "Testovich"
-            }
-
-        val item = order.sellItems[0].item
-        item.recipe = recipe
-
+        val order = createOrderForHappyPassWithSellItemTest()
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(order))
 
-        val adjustedOrder = orderService.addItemWithAmount(order.id, ItemWithAmountRequest(item, 2))
-        adjustedOrder.updateTotal()
+        val adjustedOrder =
+            orderService.addItemWithAmountOrMidify(order.id, ItemWithAmountRequest(order.sellItems[0].item, 2))
         assertEquals(2, adjustedOrder.sellItems[0].amount)
 
+    }
+
+    private fun createOrderForHappyPassWithSellItemTest() = createRandomOrder()
+        .sellItems {
+            it.add(SellItem(createRandomItemByRecipe(recipe), 10.0, 1))
+        }.discountAmount {
+            10.0
+        }.salesperson {
+            it.name = "Vasya"
+            it.lastname = "Testovich"
+        }
+
+    @Test
+    fun `Happy pass - add sellItem to order without sellItems`() {
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe)
+        val order = createRandomOrder()
+        doReturn(mutableListOf(order)).`when`(orderRepository).getAll()
+
+        val adjustedOrder =
+            orderService.addItemWithAmountOrMidify(order.id, ItemWithAmountRequest(createRandomItemByRecipe(recipe), 2))
+        assertEquals(2, adjustedOrder.sellItems[0].amount)
     }
 
     @Test

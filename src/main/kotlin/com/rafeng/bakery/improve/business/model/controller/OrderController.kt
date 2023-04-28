@@ -49,7 +49,7 @@ class OrderController(val orderService: OrderService) {
 
     @PutMapping("/{uuid}")
     fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) =
-        orderService.addItemWithAmount(
+        orderService.addItemWithAmountOrMidify(
             uuid,
             itemWithAmountRequest
         )
