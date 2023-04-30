@@ -2,9 +2,12 @@ package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.*
+import com.rafeng.bakery.improve.business.model.dto.PaymentType.*
+import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
+import com.rafeng.bakery.improve.business.util.createRandomOrder
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -18,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
-class OrderServicePractice {
+class OrderServiceTest {
 
     @Mock
     private lateinit var priceService: PriceService
@@ -50,8 +53,8 @@ class OrderServicePractice {
             1,
             LocalDateTime.now(),
             5.0,
-            Worker("Lena", "Trofimova", Position.SALESPERSON),
-            PaymentType.CASH
+            Worker("Lena", "Trofimova", SALESPERSON),
+            CASH
             )
         assertThat(newOrder).isNotNull
         assertThat(newOrder).hasNoNullFieldsOrProperties()
@@ -80,6 +83,27 @@ class OrderServicePractice {
             paymentType
             )
 
+    }
+
+    @Test
+    fun `Happy pass - an item was deleted from order`() {
+        val item = createRandomItemByRecipe(recipe)
+
+        val order = orderService.createNewOrder(
+            item,
+            5,
+            LocalDateTime.now(),
+            2.0,
+            Worker(
+                "Nastya",
+                "Ivanova",
+                SALESPERSON
+            ),
+            CASH
+        )
+
+        orderService.delete(order, item)
+        assertThat(order.sellItems).isEmpty()
     }
 
 

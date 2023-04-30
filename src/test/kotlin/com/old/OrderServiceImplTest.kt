@@ -88,7 +88,7 @@ class OrderServiceImplTest {
 
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
 
-        val order = orderService.addItemWithAmountOrMidify(newOrder.id, ItemWithAmountRequest(item, 2))
+        val order = orderService.addItemWithAmountOrModify(newOrder.id, ItemWithAmountRequest(item, 2))
 
         order.updateTotal()
 
@@ -133,7 +133,7 @@ class OrderServiceImplTest {
             )
         val item = newOrder.sellItems[0].item
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
-        val order = orderService.addItemWithAmountOrMidify(newOrder.id, ItemWithAmountRequest(item, -7))
+        val order = orderService.addItemWithAmountOrModify(newOrder.id, ItemWithAmountRequest(item, -7))
         assertFalse(order.sellItems[0].amount == -2)
 
         verify(priceService, times(2)).findPriceBy(recipe)

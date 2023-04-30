@@ -46,7 +46,7 @@ interface OrderService {
      * @param item - The item we want to add to an order
      * @param amount - Haw many of these items we would like to add to the order.
      */
-    fun addItemWithAmountOrMidify(
+    fun addItemWithAmountOrModify(
         uuid: UUID,
         itemWithAmountRequest: ItemWithAmountRequest
     ): Order // 2) Oh I wanna this cake too and then I wanna a tea

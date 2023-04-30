@@ -46,7 +46,7 @@ class OrderKtTest {
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(order))
 
         val adjustedOrder =
-            orderService.addItemWithAmountOrMidify(order.id, ItemWithAmountRequest(order.sellItems[0].item, 2))
+            orderService.addItemWithAmountOrModify(order.id, ItemWithAmountRequest(order.sellItems[0].item, 2))
         assertEquals(2, adjustedOrder.sellItems[0].amount)
 
     }
@@ -67,7 +67,7 @@ class OrderKtTest {
         doReturn(mutableListOf(order)).`when`(orderRepository).getAll()
 
         val adjustedOrder =
-            orderService.addItemWithAmountOrMidify(order.id, ItemWithAmountRequest(createRandomItemByRecipe(recipe), 2))
+            orderService.addItemWithAmountOrModify(order.id, ItemWithAmountRequest(createRandomItemByRecipe(recipe), 2))
         assertEquals(2, adjustedOrder.sellItems[0].amount)
     }
 

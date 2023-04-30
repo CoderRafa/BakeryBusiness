@@ -92,7 +92,7 @@ class OrderServiceImpl(
     /**
      * This function can add an item to an existing order in progress.
      */
-    override fun addItemWithAmountOrMidify(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order {
+    override fun addItemWithAmountOrModify(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order {
         val order = getOrderByUuid(uuid)
         order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe)!!, itemWithAmountRequest)
         return order

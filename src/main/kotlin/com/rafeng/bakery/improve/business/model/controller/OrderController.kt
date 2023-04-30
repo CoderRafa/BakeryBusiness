@@ -49,17 +49,17 @@ class OrderController(val orderService: OrderService) {
 
     @PutMapping("/{uuid}")
     fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) =
-        orderService.addItemWithAmountOrMidify(
+        orderService.addItemWithAmountOrModify(
             uuid,
             itemWithAmountRequest
         )
 
 
     @DeleteMapping
-    fun deleteItem(@RequestBody order: Order, item: Item) {
+    fun deleteItem(@RequestBody deleteElementFromOrderRequest: DeleteElementFromOrderRequest) {
         orderService.delete(
-            order,
-            item
+            deleteElementFromOrderRequest.order,
+            deleteElementFromOrderRequest.item
         )
     }
 
@@ -85,4 +85,9 @@ class OrderFromSellItemsElementsRequest(
 data class ItemWithAmountRequest(
     val item: Item,
     val amount: Int
+)
+
+data class DeleteElementFromOrderRequest(
+    val order: Order,
+    val item: Item
 )
