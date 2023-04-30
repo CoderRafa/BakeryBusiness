@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model.dto
 
+import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
 import com.rafeng.bakery.improve.business.model.Allergen
 import com.rafeng.bakery.improve.business.model.Filling
 import com.rafeng.bakery.improve.business.model.FillingType
@@ -16,6 +17,7 @@ import java.time.LocalDateTime
  * This class describes an item that can be produced in the bakery
  */
 data class Item(
+    val id: String = generateUniqueStringIdentifier(),
     val name: String,
     val weight: Double,
     val size: ItemSize = ItemSize.SMALL,
@@ -63,6 +65,7 @@ data class Item(
         recipe: Recipe,
         createDate: LocalDateTime
     ) : this(
+        generateUniqueStringIdentifier(),
         name,
         weight,
         size,

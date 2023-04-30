@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.util
 
+import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
 import com.rafeng.bakery.improve.business.model.Filling
 import com.rafeng.bakery.improve.business.model.FillingType
 import com.rafeng.bakery.improve.business.model.ItemFilling
@@ -18,7 +19,6 @@ import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.model.dto.updateTotal
 import java.time.LocalDateTime
-import java.util.*
 import kotlin.random.Random
 
 fun createRandomItemByRecipe(recipe: Recipe) = Item(
@@ -39,7 +39,7 @@ fun createRandomItemByRecipe(recipe: Recipe) = Item(
 fun createRecipe() = Recipe("test", "description", 2, 3.0)
 
 fun createRandomOrder(): Order = Order(
-    UUID.randomUUID(),
+    generateUniqueStringIdentifier(),
     mutableListOf(),
     0.0,
     LocalDateTime.now(),

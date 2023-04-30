@@ -88,7 +88,7 @@ class OrderServiceImplTest {
 
         `when`(orderRepository.getAll()).thenReturn(mutableListOf(newOrder))
 
-        val order = orderService.addItemWithAmountOrModify(newOrder.id, ItemWithAmountRequest(item, 2))
+        val order = orderService.addItemWithAmountOrModify(newOrder.id.toString(), ItemWithAmountRequest(item, 2))
 
         order.updateTotal()
 
@@ -156,7 +156,7 @@ class OrderServiceImplTest {
             PaymentType.CASH
             )
 
-        orderService.delete(order, sellItems.first().item)
+        orderService.delete(order.id, sellItems.first().item.id)
         assertEquals(90.0, order.total)
         assertEquals(9, order.sellItems.size)
 

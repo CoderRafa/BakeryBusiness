@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
  * This class describes orders that has been done so far
  */
 @Component
-class OrderRepository (
+class OrderRepository(
     private val orders: MutableList<Order> = mutableListOf()
-): DefaultRepositoryImpl<Order>(orders)
+) : DefaultRepositoryImpl<Order>(orders) {
+    fun findById(orderId: String) = orders.firstOrNull { it.id == orderId }
+}

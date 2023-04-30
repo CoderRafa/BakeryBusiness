@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.service.impl
 
+import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.dto.Item
@@ -7,12 +8,12 @@ import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
 import com.rafeng.bakery.improve.business.model.dto.Worker
 import com.rafeng.bakery.improve.business.model.dto.addOrModifySellItem
+import com.rafeng.bakery.improve.business.model.dto.updateTotal
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.OrderService
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
 
 /**
  * This class can creates an order.
@@ -40,7 +41,7 @@ class OrderServiceImpl(
         val price = priceService.findPriceBy(item.recipe)
 
         val order = Order(
-            UUID.randomUUID(),
+            generateUniqueStringIdentifier(),
             mutableListOf(
                 SellItem(
                     item,
@@ -72,7 +73,7 @@ class OrderServiceImpl(
         paymentType: PaymentType
     ): Order {
         return Order(
-            UUID.randomUUID(),
+            generateUniqueStringIdentifier(),
             sellItems.toMutableList(),
             countTotal(sellItems),
             createdDateAndTime,
@@ -92,7 +93,7 @@ class OrderServiceImpl(
     /**
      * This function can add an item to an existing order in progress.
      */
-    override fun addItemWithAmountOrModify(uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest): Order {
+    override fun addItemWithAmountOrModify(uuid: String, itemWithAmountRequest: ItemWithAmountRequest): Order {
         val order = getOrderByUuid(uuid)
         order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe)!!, itemWithAmountRequest)
         return order
@@ -101,13 +102,13 @@ class OrderServiceImpl(
     /**
      * This function can delete an item from an order.
      */
-    override fun delete(order: Order, item: Item) {
-        val itemAmount: Int = order.sellItems.filter { it.item.name == item.name }[0].amount
-        order.total -= priceService.findPriceBy(item.recipe)!! * itemAmount
-        order.sellItems.removeIf { it.item == item }
+    override fun delete(orderId: String, itemId: String) {
+        val order: Order = orderRepository.findById(orderId) ?: return
+        order.sellItems.removeIf { it.item.id == itemId }
+        order.updateTotal()
     }
 
     override fun getAll(): List<Order> = orderRepository.getAll().toList()
 
-    fun getOrderByUuid(uuid: UUID) = orderRepository.getAll().first { it.id == uuid }
+    fun getOrderByUuid(uuid: String) = orderRepository.getAll().first { it.id == uuid.toString() }
 }

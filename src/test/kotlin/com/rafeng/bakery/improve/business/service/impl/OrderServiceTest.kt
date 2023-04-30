@@ -7,14 +7,12 @@ import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
-import com.rafeng.bakery.improve.business.util.createRandomOrder
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
@@ -26,16 +24,13 @@ class OrderServiceTest {
     @Mock
     private lateinit var priceService: PriceService
 
-    @Mock
-    private lateinit var orderRepository: OrderRepository
-
-    @InjectMocks
     private lateinit var orderService: OrderServiceImpl
 
     private val recipe = createRecipe()
 
     @BeforeEach
     fun setUp() {
+        orderService = OrderServiceImpl(priceService, OrderRepository())
     }
 
     @AfterEach
@@ -102,7 +97,7 @@ class OrderServiceTest {
             CASH
         )
 
-        orderService.delete(order, item)
+        orderService.delete(order.id, item.id)
         assertThat(order.sellItems).isEmpty()
     }
 

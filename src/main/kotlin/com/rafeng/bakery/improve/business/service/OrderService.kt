@@ -47,7 +47,7 @@ interface OrderService {
      * @param amount - Haw many of these items we would like to add to the order.
      */
     fun addItemWithAmountOrModify(
-        uuid: UUID,
+        uuid: String,
         itemWithAmountRequest: ItemWithAmountRequest
     ): Order // 2) Oh I wanna this cake too and then I wanna a tea
 
@@ -56,7 +56,7 @@ interface OrderService {
      * @param order - From which order we would like to delete this item.
      * @param item - Which item we would like to delete.
      */
-    fun delete(order: Order, item: Item)
+    fun delete(orderId: String, itemId: String)
 
     fun getAll(): List<Order>
 }

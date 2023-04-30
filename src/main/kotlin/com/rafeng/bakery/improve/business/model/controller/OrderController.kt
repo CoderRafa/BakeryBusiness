@@ -25,8 +25,8 @@ class OrderController(val orderService: OrderService) {
     fun getAll() = orderService.getAll()
 
     @PostMapping("/basic")
-    fun createNewOrder(@RequestBody order: OrderElementsRequest) {
-        orderService.createNewOrder(
+    fun createNewOrder(@RequestBody order: OrderElementsRequest): Order {
+        return orderService.createNewOrder(
             order.item,
             order.amount,
             order.createdDateAndTime,
@@ -47,10 +47,10 @@ class OrderController(val orderService: OrderService) {
         )
     }
 
-    @PutMapping("/{uuid}")
-    fun addItemWithAmount(@PathVariable uuid: UUID, itemWithAmountRequest: ItemWithAmountRequest) =
+    @PutMapping("/{orderId}")
+    fun addItemWithAmount(@PathVariable orderId: String, itemWithAmountRequest: ItemWithAmountRequest) =
         orderService.addItemWithAmountOrModify(
-            uuid,
+            orderId,
             itemWithAmountRequest
         )
 
@@ -58,8 +58,8 @@ class OrderController(val orderService: OrderService) {
     @DeleteMapping
     fun deleteItem(@RequestBody deleteElementFromOrderRequest: DeleteElementFromOrderRequest) {
         orderService.delete(
-            deleteElementFromOrderRequest.order,
-            deleteElementFromOrderRequest.item
+            deleteElementFromOrderRequest.orderId,
+            deleteElementFromOrderRequest.itemId
         )
     }
 
@@ -88,6 +88,6 @@ data class ItemWithAmountRequest(
 )
 
 data class DeleteElementFromOrderRequest(
-    val order: Order,
-    val item: Item
+    val orderId: String,
+    val itemId: String
 )

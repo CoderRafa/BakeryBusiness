@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.repository
 
+import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
 import com.rafeng.bakery.improve.business.model.Filling
 import com.rafeng.bakery.improve.business.model.FillingType
 import com.rafeng.bakery.improve.business.model.ItemFilling
@@ -21,7 +22,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import java.util.*
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextDouble
 import kotlin.random.Random.Default.nextInt
@@ -67,15 +67,15 @@ class OrderRepositoryKtTest {
 
 fun createRandomOrder(recipe: Recipe): Order {
     return Order(
-        UUID.randomUUID(),
+        generateUniqueStringIdentifier(),
         mutableListOf(
             createRandomSellItem(recipe),
             createRandomSellItem(recipe),
             createRandomSellItem(recipe)
-            ),
-        Random.nextDouble(2.0,7.0),
+        ),
+        Random.nextDouble(2.0, 7.0),
         LocalDateTime.now(),
-        Random.nextDouble(2.0,5.0),
+        Random.nextDouble(2.0, 5.0),
         Worker("Lena", "Trofimova", Position.SALESPERSON),
         PaymentType.values()[nextInt(0, ItemSize.values().size - 1)]
     )
