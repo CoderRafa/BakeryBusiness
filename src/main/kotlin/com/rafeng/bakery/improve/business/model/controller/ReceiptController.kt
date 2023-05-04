@@ -1,9 +1,6 @@
 package com.rafeng.bakery.improve.business.model.controller
 
-import com.rafeng.bakery.improve.business.model.Client
 import com.rafeng.bakery.improve.business.model.Receipt
-import com.rafeng.bakery.improve.business.model.dto.Order
-import com.rafeng.bakery.improve.business.service.DefaultService
 import com.rafeng.bakery.improve.business.service.impl.ReceiptServiceImpl
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
