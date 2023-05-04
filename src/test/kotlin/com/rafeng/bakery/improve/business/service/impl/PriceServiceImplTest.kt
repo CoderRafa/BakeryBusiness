@@ -22,7 +22,7 @@ class PriceServiceImplTest {
 
     @Test
     fun `Happy pass - the price is found`() {
-        priceService.addPriceFor(recipe, 10.0)
-        assertEquals(10.0, priceService.findPriceBy(recipe))
+        priceService.addPriceFor(recipe.id, 10.0)
+        assertEquals(10.0, priceService.findPriceBy(recipe.id))
     }
 }

@@ -38,7 +38,7 @@ class OrderServiceImpl(
         paymentType: PaymentType
     ): Order {
 
-        val price = priceService.findPriceBy(item.recipe)
+        val price = priceService.findPriceBy(item.recipe.id)
 
         val order = Order(
             generateUniqueStringIdentifier(),
@@ -95,17 +95,22 @@ class OrderServiceImpl(
      */
     override fun addItemWithAmountOrModify(uuid: String, itemWithAmountRequest: ItemWithAmountRequest): Order {
         val order = getOrderByUuid(uuid)
-        order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe)!!, itemWithAmountRequest)
+        order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe.id)!!, itemWithAmountRequest)
         return order
     }
 
     /**
      * This function can delete an item from an order.
      */
-    override fun delete(orderId: String, itemId: String) {
+    override fun deleteItemFromOrder(orderId: String, itemId: String) {
         val order: Order = orderRepository.findById(orderId) ?: return
         order.sellItems.removeIf { it.item.id == itemId }
         order.updateTotal()
+    }
+
+    override fun deleteOrder(orderId: String) {
+        val order: Order = orderRepository.findById(orderId) ?: return
+        orderRepository.delete(order)
     }
 
     override fun getAll(): List<Order> = orderRepository.getAll().toList()

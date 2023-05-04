@@ -55,14 +55,18 @@ class OrderController(val orderService: OrderService) {
         )
 
 
-    @DeleteMapping
+    @DeleteMapping("/delte-item")
     fun deleteItem(@RequestBody deleteElementFromOrderRequest: DeleteElementFromOrderRequest) {
-        orderService.delete(
+        orderService.deleteItemFromOrder(
             deleteElementFromOrderRequest.orderId,
             deleteElementFromOrderRequest.itemId
         )
     }
 
+    @DeleteMapping("/delete-order")
+    fun deleteOrder(@RequestBody orderId: String) {
+        orderService.deleteOrder(orderId)
+    }
 }
 
 class OrderElementsRequest(

@@ -41,14 +41,14 @@ class OrderServiceTest {
     @Test
     fun `Happy pass - create a new order`() {
 
-        `when`(priceService.findPriceBy(recipe)).thenReturn(10.0)
+        `when`(priceService.findPriceBy(recipe.id)).thenReturn(10.0)
 
         val newOrder = createOrder(
             recipe,
             1,
             LocalDateTime.now(),
             5.0,
-            Worker("Lena", "Trofimova", SALESPERSON),
+            Worker(name = "Lena", lastname = "Trofimova", position = SALESPERSON),
             CASH
             )
         assertThat(newOrder).isNotNull
@@ -57,7 +57,7 @@ class OrderServiceTest {
         assertThat(newOrder.sellItems[0].amount).isEqualTo(1)
         assertThat(newOrder.total).isEqualTo(10.0)
 
-        verify(priceService, times(1)).findPriceBy(recipe)
+        verify(priceService, times(1)).findPriceBy(recipe.id)
     }
 
     private fun createOrder(
@@ -90,15 +90,44 @@ class OrderServiceTest {
             LocalDateTime.now(),
             2.0,
             Worker(
-                "Nastya",
-                "Ivanova",
-                SALESPERSON
+                name = "Nastya",
+                lastname = "Ivanova",
+                position = SALESPERSON
             ),
             CASH
         )
 
-        orderService.delete(order.id, item.id)
+        orderService.deleteItemFromOrder(order.id, item.id)
         assertThat(order.sellItems).isEmpty()
+    }
+
+    @Test
+    fun `Happy pass - an order was deleted`() {
+        val item = createRandomItemByRecipe(recipe)
+
+        val order = orderService.createNewOrder(
+            item,
+            5,
+            LocalDateTime.now(),
+            2.0,
+            Worker(
+                name = "Nastya",
+                lastname = "Ivanova",
+                position = SALESPERSON
+            ),
+            CASH
+        )
+
+        val orderRepository = OrderRepository()
+
+        orderRepository.save(order)
+
+        assertThat(orderService.getAll().size).isEqualTo(1)
+
+        orderService.deleteOrder(order.id)
+
+        assertThat(orderService.getAll()).isEmpty()
+
     }
 
 

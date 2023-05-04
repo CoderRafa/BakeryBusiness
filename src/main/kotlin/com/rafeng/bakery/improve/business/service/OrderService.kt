@@ -56,7 +56,9 @@ interface OrderService {
      * @param order - From which order we would like to delete this item.
      * @param item - Which item we would like to delete.
      */
-    fun delete(orderId: String, itemId: String)
+    fun deleteItemFromOrder(orderId: String, itemId: String)
+
+    fun deleteOrder(orderId: String)
 
     fun getAll(): List<Order>
 }

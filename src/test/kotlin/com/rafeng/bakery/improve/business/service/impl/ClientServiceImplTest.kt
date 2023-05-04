@@ -19,9 +19,9 @@ class ClientServiceImplTest {
     val clientServiceImpl = ClientServiceImpl(clientRepository)
 
     val client = Client(
-        "Valeriy",
-        "Ivanov",
-        "+794565859845"
+        name = "Valeriy",
+        lastname = "Ivanov",
+        phoneNumber = "+794565859845"
     )
     @Test
     fun `Happy pass - add a client to repository`() {

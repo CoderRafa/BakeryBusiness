@@ -17,8 +17,8 @@ class PriceCalculationServiceImplPracticeTest {
     private lateinit var checkPriceService: CheckPriceService
     private lateinit var priceCalculationService: PriceCalculationService
 
-    private val recipe = Recipe("name", "description", 2, 2.0)
-    private val recipeWithNoDescription = Recipe("name", "", 2, 2.0)
+    private val recipe = Recipe(name = "name", description = "description", expirationPeriod = 2, cookingTime = 2.0)
+    private val recipeWithNoDescription = Recipe(name = "name", description = "", expirationPeriod = 2, cookingTime = 2.0)
 
     @BeforeEach
     fun setUp() {
@@ -31,20 +31,20 @@ class PriceCalculationServiceImplPracticeTest {
     fun `Happy pass - PriceCalculationService creates price`() {
 
         priceCalculationService.createPrice(10.0, recipe)
-        assertEquals(10.0, priceService.findPriceBy(recipe) )
+        assertEquals(10.0, priceService.findPriceBy(recipe.id) )
     }
 
     @Test
     fun `Negative pass - price doesn't meet the requirements`() {
 
         priceCalculationService.createPrice(0.0, recipe)
-        assertNull(priceService.findPriceBy(recipe))
+        assertNull(priceService.findPriceBy(recipe.id))
     }
 
     @Test
     fun `Negative pass - empty description`() {
 
         priceCalculationService.createPrice(15.0, recipeWithNoDescription)
-        assertNull(priceService.findPriceBy(recipe))
+        assertNull(priceService.findPriceBy(recipe.id))
     }
 }

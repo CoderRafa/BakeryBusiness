@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class MenuRepositoryKtTest { 
 
     private lateinit var menuRepo: MenuRepository
-    private val recipe = Recipe("test", "super test", 2, 2.15)
+    private val recipe = Recipe(name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
     @BeforeEach
     fun setUp() {
         menuRepo = MenuRepository()

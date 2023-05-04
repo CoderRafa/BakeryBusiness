@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test
 class depotRepositoryKtTest {
 
     private lateinit var depotRepo: DepotRepository
-    private val recipe1 = Recipe("test", "super test", 2, 2.15)
-    private val recipe2 = Recipe("test2", "super test2", 4, 1.0)
-    private val recipe3 = Recipe("test3", "super test3", 6, 2.0)
+    private val recipe1 = Recipe(name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
+    private val recipe2 = Recipe(name = "test2", description = "super test2", expirationPeriod = 4, cookingTime = 1.0)
+    private val recipe3 = Recipe(name = "test3", description = "super test3", expirationPeriod = 6, cookingTime = 2.0)
     @BeforeEach
     fun setUp() {
         depotRepo = DepotRepository()

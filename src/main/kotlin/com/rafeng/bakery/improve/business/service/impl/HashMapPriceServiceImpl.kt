@@ -3,12 +3,12 @@ package com.rafeng.bakery.improve.business.service.impl
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.PriceService
 
-class HashMapPriceServiceImpl(private val accumulator: MutableMap<Recipe, Double> = mutableMapOf()
-) : PriceService, MutableMap<Recipe, Double> by accumulator {
-    override fun findPriceBy(recipe: Recipe): Double? = this[recipe]
+class HashMapPriceServiceImpl(private val accumulator: MutableMap<String, Double> = mutableMapOf()
+) : PriceService, MutableMap<String, Double> by accumulator {
+    override fun findPriceBy(id: String): Double? = this[id]
 
 
-    override fun addPriceFor(recipe: Recipe, price: Double) {
-        this[recipe] = price
+    override fun addPriceFor(id: String, price: Double) {
+        this[id] = price
     }
 }

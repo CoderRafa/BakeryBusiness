@@ -29,7 +29,7 @@ import kotlin.random.Random.Default.nextInt
 class OrderRepositoryKtTest {
 
     private lateinit var orderRepo: OrderRepository
-    private val recipe = Recipe("test", "super test", 2, 2.15)
+    private val recipe = Recipe(name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
     @BeforeEach
     fun setUp() {
         orderRepo = OrderRepository()
@@ -76,7 +76,7 @@ fun createRandomOrder(recipe: Recipe): Order {
         Random.nextDouble(2.0, 7.0),
         LocalDateTime.now(),
         Random.nextDouble(2.0, 5.0),
-        Worker("Lena", "Trofimova", Position.SALESPERSON),
+        Worker(name = "Lena", lastname = "Trofimova", position = Position.SALESPERSON),
         PaymentType.values()[nextInt(0, ItemSize.values().size - 1)]
     )
 }

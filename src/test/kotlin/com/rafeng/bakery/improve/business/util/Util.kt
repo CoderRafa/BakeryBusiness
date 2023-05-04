@@ -36,7 +36,7 @@ fun createRandomItemByRecipe(recipe: Recipe) = Item(
     LocalDateTime.now()
 )
 
-fun createRecipe() = Recipe("test", "description", 2, 3.0)
+fun createRecipe() = Recipe(name = "test", description = "description", expirationPeriod = 2, cookingTime = 3.0)
 
 fun createRandomOrder(): Order = Order(
     generateUniqueStringIdentifier(),
@@ -45,9 +45,9 @@ fun createRandomOrder(): Order = Order(
     LocalDateTime.now(),
     0.0,
     Worker(
-        "",
-        "",
-        SALESPERSON
+        name = "",
+        lastname = "",
+        position = SALESPERSON
     ),
     CASH
 )
@@ -64,7 +64,7 @@ fun Order.discountAmount(initialize: () -> Double): Order {
 }
 
 fun Order.salesperson(initialize: (Worker) -> Unit): Order {
-    val salesPerson = Worker("", "", SALESPERSON)
+    val salesPerson = Worker(name = "", lastname = "", position = SALESPERSON)
     initialize(salesPerson)
     this.salesperson = salesPerson
     return this

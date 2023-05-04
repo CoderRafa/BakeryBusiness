@@ -17,7 +17,7 @@ class PriceCalculationServiceImpl(
      */
     override fun createPrice(price: Double, recipe: Recipe) {
         if (checkPriceService.checkPrice(price, recipe)) {
-            priceService.addPriceFor(recipe, price)
+            priceService.addPriceFor(recipe.id, price)
         }
     }
 }
