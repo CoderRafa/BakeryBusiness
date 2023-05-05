@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.controller
 
+import com.rafeng.bakery.improve.business.model.controller.RecipeController
 import com.rafeng.bakery.improve.business.repository.spring.LiquibaseH2TestConfig
 import org.hamcrest.collection.IsCollectionWithSize
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@WebMvcTest
+@WebMvcTest(RecipeController::class)
 @ActiveProfiles("h2")
 @SpringBootTest(classes = [LiquibaseH2TestConfig::class])
 class RecipeControllerTest @Autowired constructor(val mockMvc: MockMvc) {
