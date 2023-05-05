@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model.entity
 
+import com.rafeng.bakery.improve.business.model.dto.Recipe
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -16,14 +17,16 @@ class RecipeEntity {
     var id: Long? = null
 
     @Column(name = "name", nullable = false)
-    var name: String? = null
+    lateinit var name: String
 
     @Column(name = "description", nullable = false)
-    var description: String? = null
+    lateinit var description: String
 
     @Column(name = "expiration_period", nullable = false)
-    var expirationPeriod: Int? = null
+    var expirationPeriod: Int = 0
 
     @Column(name = "cooking_time", nullable = false)
-    var cookingTime: Double? = null
+    var cookingTime: Double = 0.0
 }
+
+fun RecipeEntity.toDto() = Recipe(id, name, description, expirationPeriod, cookingTime)
