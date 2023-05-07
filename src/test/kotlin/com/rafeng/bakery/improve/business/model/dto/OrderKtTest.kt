@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.model.dto
 
+import com.rafeng.bakery.improve.business.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.SellItem
-import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
@@ -32,11 +32,12 @@ class OrderKtTest {
     @InjectMocks
     private lateinit var orderService: OrderServiceImpl
 
-    private val recipe = Recipe(name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
+    private val recipe =
+        Recipe(id = 1, name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
 
     @BeforeEach
     fun setUp() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id)
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id!!)
         orderService = OrderServiceImpl(priceService, orderRepository)
     }
 
@@ -75,7 +76,10 @@ class OrderKtTest {
     fun addOrModifySellItem() {
         val order = createOrderForHappyPassWithSellItemTest()
         assertThat(order.total).isEqualTo(10.0)
-        order.addOrModifySellItem(priceService.findPriceBy(recipe.id)!!, ItemWithAmountRequest(order.sellItems[0].item, 3))
+        order.addOrModifySellItem(
+            priceService.findPriceBy(recipe.id!!)!!,
+            ItemWithAmountRequest(order.sellItems[0].item, 3)
+        )
         assertThat(order.sellItems.map { it.item }).contains(order.sellItems[0].item)
         assertThat(order.sellItems[0].amount).isEqualTo(3)
         assertThat(order.total).isEqualTo(30.0)

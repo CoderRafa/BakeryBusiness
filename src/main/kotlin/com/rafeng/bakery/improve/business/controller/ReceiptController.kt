@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.model.controller
+package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.Receipt
 import com.rafeng.bakery.improve.business.service.impl.ReceiptServiceImpl

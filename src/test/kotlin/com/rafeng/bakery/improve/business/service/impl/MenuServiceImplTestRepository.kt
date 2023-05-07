@@ -62,7 +62,7 @@ class MenuServiceImplTestRepository {
         val items = mutableListOf<Item>()
         (1..7).forEach { items.add(createItemForTest()) }
         for (item in items) {
-            `when`(priceService.findPriceBy(item.recipe.id)).thenReturn(10.0)
+            `when`(priceService.findPriceBy(item.recipe.id!!)).thenReturn(10.0)
             addItemForTest(item)
         }
         assertTrue(defaultDefaultService.getAllMenuItems().size == 7)

@@ -16,7 +16,7 @@ class PriceCalculationServiceImpl(
      * This function assigns a price to a recipe if that price and recipe meet the condition
      */
     override fun createPrice(price: Double, recipe: Recipe) {
-        if (checkPriceService.checkPrice(price, recipe)) {
+        if (checkPriceService.checkPrice(price, recipe) && recipe.id != null) {
             priceService.addPriceFor(recipe.id, price)
         }
     }

@@ -1,10 +1,10 @@
 package com.old
 
+import com.rafeng.bakery.improve.business.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
 import com.rafeng.bakery.improve.business.model.Taste.SWEET
-import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
@@ -38,7 +38,8 @@ class OrderServiceImplTest {
 
     @InjectMocks
     private lateinit var orderService: OrderServiceImpl
-    private val recipe = Recipe(name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
+    private val recipe =
+        Recipe(id = 1, name = "test", description = "super test", expirationPeriod = 2, cookingTime = 2.15)
 
     @BeforeEach
     fun setUp() {
@@ -53,7 +54,7 @@ class OrderServiceImplTest {
     @Test
     fun `Happy pass - create a new order`() {
 
-        `when`(priceService.findPriceBy(recipe.id)).thenReturn(10.0)
+        `when`(priceService.findPriceBy(recipe.id!!)).thenReturn(10.0)
 
         val newOrder = createOrder(
             recipe,
@@ -69,12 +70,12 @@ class OrderServiceImplTest {
         assertThat(newOrder.sellItems[0].amount).isEqualTo(1)
         assertThat(newOrder.total).isEqualTo(10.0)
 
-        verify(priceService, times(1)).findPriceBy(recipe.id)
+        verify(priceService, times(1)).findPriceBy(recipe.id!!)
     }
 
     @Test
     fun `Happy pass - add a new item to the existing order`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id)
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id!!)
 
         val newOrder = createOrder(
             recipe,
@@ -97,16 +98,17 @@ class OrderServiceImplTest {
         assertThat(order.sellItems).allMatch { it.amount == 2 }
         assertThat(order.total).isEqualTo(20.0)
 
-        verify(priceService, times(2)).findPriceBy(recipe.id)
+        verify(priceService, times(2)).findPriceBy(recipe.id!!)
     }
 
     @Test
     fun `Happy pass - create a new order by passing a set of sellItems`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id)
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id!!)
         val sellItems = mutableSetOf<SellItem>()
         (1..10).forEach {
-            sellItems.add(SellItem(createRandomItemByRecipe(recipe),
-                priceService.findPriceBy(recipe.id)!!,
+            sellItems.add(SellItem(
+                createRandomItemByRecipe(recipe),
+                priceService.findPriceBy(recipe.id!!)!!,
                 1
             ))}
         assertTrue(sellItems.size > 0)
@@ -115,13 +117,13 @@ class OrderServiceImplTest {
         assertTrue(sellItems.all { it.price == 10.0} )
         assertTrue(sellItems.all { it.item.recipe == recipe})
 
-        verify(priceService, times(10)).findPriceBy(recipe.id)
+        verify(priceService, times(10)).findPriceBy(recipe.id!!)
 
     }
 
     @Test
     fun `Negative pass - adding negative amount`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id)
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id!!)
 
         val newOrder = createOrder(
             recipe,
@@ -136,16 +138,17 @@ class OrderServiceImplTest {
         val order = orderService.addItemWithAmountOrModify(newOrder.id, ItemWithAmountRequest(item, -7))
         assertFalse(order.sellItems[0].amount == -2)
 
-        verify(priceService, times(2)).findPriceBy(recipe.id)
+        verify(priceService, times(2)).findPriceBy(recipe.id!!)
     }
 
     @Test
     fun `Happy pass - the item is deleted from the selliItems`() {
-        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id)
+        doReturn(10.0).`when`(priceService).findPriceBy(recipe.id!!)
         val sellItems = mutableSetOf<SellItem>()
         (1..10).forEach {
-            sellItems.add(SellItem(createRandomItemByRecipe(recipe),
-                priceService.findPriceBy(recipe.id)!!,
+            sellItems.add(SellItem(
+                createRandomItemByRecipe(recipe),
+                priceService.findPriceBy(recipe.id!!)!!,
                 1
             ))}
         val order = createOrderFromSellItems(
@@ -160,7 +163,7 @@ class OrderServiceImplTest {
         assertEquals(90.0, order.total)
         assertEquals(9, order.sellItems.size)
 
-        verify(priceService, times(11)).findPriceBy(recipe.id)
+        verify(priceService, times(11)).findPriceBy(recipe.id!!)
 
     }
 

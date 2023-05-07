@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.model.controller
+package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.dto.AddItemRequest
 import com.rafeng.bakery.improve.business.model.dto.Recipe

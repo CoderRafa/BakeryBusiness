@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.model.controller
+package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.dto.CreatePriceForRecipeRequest
 import com.rafeng.bakery.improve.business.service.PriceService
@@ -17,6 +17,6 @@ class PriceController(val priceService: PriceService) {
     }
 
     @GetMapping
-    fun getPriceForRecipe(id: String) = priceService.findPriceBy(id)
+    fun getPriceForRecipe(id: Long) = priceService.findPriceBy(id)
 }
 

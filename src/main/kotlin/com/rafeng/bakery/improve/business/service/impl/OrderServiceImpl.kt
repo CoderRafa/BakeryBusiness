@@ -1,8 +1,8 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
+import com.rafeng.bakery.improve.business.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.SellItem
-import com.rafeng.bakery.improve.business.model.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType
@@ -38,7 +38,7 @@ class OrderServiceImpl(
         paymentType: PaymentType
     ): Order {
 
-        val price = priceService.findPriceBy(item.recipe.id)
+        val price = priceService.findPriceBy(item.recipe.id!!)
 
         val order = Order(
             generateUniqueStringIdentifier(),
@@ -95,7 +95,10 @@ class OrderServiceImpl(
      */
     override fun addItemWithAmountOrModify(uuid: String, itemWithAmountRequest: ItemWithAmountRequest): Order {
         val order = getOrderByUuid(uuid)
-        order.addOrModifySellItem(priceService.findPriceBy(itemWithAmountRequest.item.recipe.id)!!, itemWithAmountRequest)
+        order.addOrModifySellItem(
+            priceService.findPriceBy(itemWithAmountRequest.item.recipe.id!!)!!,
+            itemWithAmountRequest
+        )
         return order
     }
 

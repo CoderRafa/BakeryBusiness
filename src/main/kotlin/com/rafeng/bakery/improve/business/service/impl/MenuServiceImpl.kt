@@ -5,7 +5,6 @@ import com.rafeng.bakery.improve.business.model.dto.MenuItem
 import com.rafeng.bakery.improve.business.repository.impl.MenuRepository
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 /**
  * This class can add an Item to a menu
@@ -24,7 +23,7 @@ class MenuServiceImpl(
         return menuRepository
             .getAll()
             .map {
-                MenuItem(it, priceService.findPriceBy(it.recipe.id)!!)
+                MenuItem(it, priceService.findPriceBy(it.recipe.id!!)!!)
             }
     }
 }

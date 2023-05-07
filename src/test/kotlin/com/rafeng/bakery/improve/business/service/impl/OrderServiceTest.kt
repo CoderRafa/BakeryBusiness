@@ -41,7 +41,7 @@ class OrderServiceTest {
     @Test
     fun `Happy pass - create a new order`() {
 
-        `when`(priceService.findPriceBy(recipe.id)).thenReturn(10.0)
+        `when`(priceService.findPriceBy(recipe.id!!)).thenReturn(10.0)
 
         val newOrder = createOrder(
             recipe,
@@ -57,7 +57,7 @@ class OrderServiceTest {
         assertThat(newOrder.sellItems[0].amount).isEqualTo(1)
         assertThat(newOrder.total).isEqualTo(10.0)
 
-        verify(priceService, times(1)).findPriceBy(recipe.id)
+        verify(priceService, times(1)).findPriceBy(recipe.id!!)
     }
 
     private fun createOrder(
