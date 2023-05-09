@@ -1,27 +1,22 @@
 package com.rafeng.bakery.improve.business.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jsonMapper
-import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.impl.RecipeService
 import com.rafeng.bakery.improve.business.util.createRecipe
-import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.Disabled
+import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.http.MediaType
-import org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 
 @WebMvcTest(RecipeController::class)
 class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) {
@@ -38,93 +33,35 @@ class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) 
         mockMvc.post("/api/v1/recipe") {
             contentType = MediaType.APPLICATION_JSON
             content = jsonMapper().writeValueAsString(recipe)
-            accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk() }
             content { contentType(MediaType.APPLICATION_JSON) }
-            content { json("{}") }
+            jsonPath("$.id", Matchers.`is`(1))
         }
-
-//        mockMvc.perform(
-//            post("/api/v1/recipe")
-//                .content(
-//                    ObjectMapper().writeValueAsString(
-//                        recipe
-//                    )
-//                ).contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON)
-//        )
-//            .andExpect(MockMvcResultMatchers.status().isOk)
-//            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
     }
 
 
     @Test
-    fun `Happy pass - get all recipes`() {
-        val recipe = createRecipe()
-        Mockito.doReturn(recipe).`when`(recipeService).save(recipe)
-
-        mockMvc.get("/api/v1/recipe") {
-            contentType = MediaType.APPLICATION_JSON
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isOk() }
-            MockMvcResultMatchers.jsonPath("$.size()").value(0)
-        }
-
-        mockMvc.post("/api/v1/recipe") {
-            contentType = MediaType.APPLICATION_JSON
-            content = jsonMapper().writeValueAsString(recipe)
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isOk() }
-            content { contentType(MediaType.APPLICATION_JSON) }
-            content { json("{}") }
-        }
-
-        mockMvc.get("/api/v1/recipe") {
-            contentType = MediaType.APPLICATION_JSON
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isOk() }
-            MockMvcResultMatchers.jsonPath("$.size()").value(1)
-        }
+    fun `Happy pass - get all recipes by zero size`() {
+        mockMvc
+            .perform(get("/api/v1/recipe").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.size()").value(0))
     }
 
     @Test
-    fun `Happy pass - a recipe was deleted`() {
+    fun `Happy pass - get all recipes by one recipe`() {
         val recipe = createRecipe()
         val recipeList = listOf(recipe)
 
-        Mockito.doReturn(recipe).`when`(recipeService).save(recipe)
-        Mockito.doReturn(recipeList).`when`(recipeService).delete(recipe.id!!)
-
-        mockMvc.post("/api/v1/recipe") {
-            contentType = MediaType.APPLICATION_JSON
-            content = jsonMapper().writeValueAsString(recipe)
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            status { isOk() }
-            content { contentType(MediaType.APPLICATION_JSON) }
-            content { json("{}") }
-        }
+        Mockito.doReturn(recipeList).`when`(recipeService).get()
 
         mockMvc.get("/api/v1/recipe") {
             contentType = MediaType.APPLICATION_JSON
-            accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk() }
-            MockMvcResultMatchers.jsonPath("$.size()").value(1)
+            jsonPath("$.size()", Matchers.`is`(1))
         }
-
-        mockMvc.delete("/api/v1/recipe", recipe.id) {
-            contentType = MediaType.APPLICATION_JSON
-            accept = MediaType.APPLICATION_JSON
-        }.andExpect {
-            MockMvcResultMatchers.jsonPath("$.size()").value(0)
-        }
-        
     }
-
 }

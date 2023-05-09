@@ -29,7 +29,6 @@ class RecipeController(private val recipeService: RecipeService) {
 
     @DeleteMapping
     fun delete(@RequestBody id: Long): List<Recipe> {
-        recipeService.delete(id)
-        return recipeService.get()
+        return recipeService.delete(id)
     }
 }
