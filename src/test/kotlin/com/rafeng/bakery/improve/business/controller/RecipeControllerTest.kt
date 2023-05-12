@@ -1,6 +1,7 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.fasterxml.jackson.module.kotlin.jsonMapper
+import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.impl.RecipeService
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.hamcrest.Matchers
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -63,5 +65,22 @@ class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) 
             status { isOk() }
             jsonPath("$.size()", Matchers.`is`(1))
         }
+    }
+
+    @Test
+    fun `Happy test - a recipe was deleted`() {
+        val recipe = createRecipe()
+        val recipe1 = createRecipe()
+        val recipeList = mutableListOf(recipe1)
+
+        Mockito.doReturn(recipeList).`when`(recipeService).delete(recipe.id!!)
+
+        mockMvc.delete("/api/v1/recipe", recipe.id) {
+            contentType = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$.size()", Matchers.`is`(1))
+        }
+
     }
 }
