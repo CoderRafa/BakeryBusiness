@@ -1,11 +1,11 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.fasterxml.jackson.module.kotlin.jsonMapper
-import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.impl.RecipeService
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(RecipeController::class)
 class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) {
@@ -68,14 +69,12 @@ class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) 
     }
 
     @Test
-    fun `Happy test - a recipe was deleted`() {
-        val recipe = createRecipe()
-        val recipe1 = createRecipe()
-        val recipeList = mutableListOf(recipe1)
+    fun `Happy pass - a recipe was deleted`() {
+        val recipeList = mutableListOf(createRecipe())
 
-        Mockito.doReturn(recipeList).`when`(recipeService).delete(recipe.id!!)
+        Mockito.doReturn(recipeList).`when`(recipeService).delete(anyLong())
 
-        mockMvc.delete("/api/v1/recipe", recipe.id) {
+        mockMvc.delete("/api/v1/recipe/1") {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk() }
@@ -83,4 +82,19 @@ class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) 
         }
 
     }
+
+    @Test
+    fun `Negative pass - try to achieve the delete method with String param`() {
+        mockMvc.delete("/api/v1/recipe/sdfsdf") {
+            contentType = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { status().isBadRequest }
+        }
+
+    }
+
+//    Unit
+//    Component
+//    Integration
+//    API test
 }

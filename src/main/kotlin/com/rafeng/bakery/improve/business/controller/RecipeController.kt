@@ -6,17 +6,18 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/recipe", consumes = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/api/v1/recipe")
 class RecipeController(private val recipeService: RecipeService) {
     private val log = LoggerFactory.getLogger(RecipeController::class.java)
 
-    @PostMapping
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun add(@RequestBody recipe: Recipe): Recipe {
         log.debug("Add new recipe")
         return recipeService.save(recipe)
@@ -27,8 +28,8 @@ class RecipeController(private val recipeService: RecipeService) {
         return recipeService.get()
     }
 
-    @DeleteMapping
-    fun delete(@RequestBody id: Long): List<Recipe> {
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: Long): List<Recipe> {
         return recipeService.delete(id)
     }
 }
