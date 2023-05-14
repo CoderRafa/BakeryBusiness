@@ -1,16 +1,7 @@
 package com.rafeng.bakery.improve.business.util
 
 import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
-import com.rafeng.bakery.improve.business.model.Filling
-import com.rafeng.bakery.improve.business.model.FillingType
-import com.rafeng.bakery.improve.business.model.ItemFilling
-import com.rafeng.bakery.improve.business.model.ItemSize
-import com.rafeng.bakery.improve.business.model.ItemSmell
-import com.rafeng.bakery.improve.business.model.ItemTopping
-import com.rafeng.bakery.improve.business.model.SellItem
-import com.rafeng.bakery.improve.business.model.Taste
-import com.rafeng.bakery.improve.business.model.Topping
-import com.rafeng.bakery.improve.business.model.ToppingType
+import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType.CASH
@@ -37,6 +28,8 @@ fun createRandomItemByRecipe(recipe: Recipe) = Item(
 )
 
 fun createRecipe() = Recipe(id = 1, name = "test", description = "description", expirationPeriod = 2, cookingTime = 3.0)
+
+fun createClient() = Client(id = 1, name = "Vasiliy", lastname = "Nikiforov", phoneNumber = "+79155658987")
 
 fun createRandomOrder(): Order = Order(
     generateUniqueStringIdentifier(),

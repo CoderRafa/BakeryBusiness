@@ -1,30 +1,32 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.Client
-import com.rafeng.bakery.improve.business.service.impl.ClientServiceImpl
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.rafeng.bakery.improve.business.service.impl.ClientService
+import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/client")
-class ClientController(val clientServiceImpl: ClientServiceImpl) {
+class ClientController(val clientService: ClientService) {
+    private val log = LoggerFactory.getLogger(ClientController::class.java)
 
-    @PostMapping
-    fun addClient(@RequestBody addClientRequest: Client) {
-        clientServiceImpl.addItem(addClientRequest)
-    }
-
-    @DeleteMapping
-    fun deleteClient(@RequestBody deleteClientRequest: Client) {
-        clientServiceImpl.deleteItem(deleteClientRequest)
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun addClient(@RequestBody client: Client): Client {
+        log.debug("Add new client")
+        return clientService.save(client)
     }
 
     @GetMapping
     fun getAllClients(): List<Client> {
-        return clientServiceImpl.getAll()
+        log.debug("Get all clients")
+        return clientService.get()
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteClient(@PathVariable("id") id: Long): List<Client> {
+        log.debug("Delete a client with ID $id")
+        return clientService.delete(id)
     }
 }
+

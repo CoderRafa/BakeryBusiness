@@ -6,7 +6,7 @@ databaseChangeLog:
       changes:
         - createSequence:
             incrementBy: 50
-            sequenceName: recipe_seq
+            sequenceName: client_seq
             startValue: 1
   - changeSet:
       id: 1683231678638-2
@@ -19,7 +19,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_recipe
+                    primaryKeyName: pk_client
                   name: id
                   type: BIGINT
               - column:
@@ -30,17 +30,12 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: description
+                  name: lastname
                   type: VARCHAR(255)
               - column:
                   constraints:
                     nullable: false
-                  name: expiration_period
-                  type: INT
-              - column:
-                  constraints:
-                    nullable: false
-                  name: cooking_time
-                  type: DOUBLE
-            tableName: recipe
+                  name: phone_number
+                  type: VARCHAR(255)
+            tableName: client
 

@@ -25,11 +25,13 @@ class RecipeController(private val recipeService: RecipeService) {
 
     @GetMapping
     fun get(): List<Recipe> {
+        log.debug("Get all recipes")
         return recipeService.get()
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Long): List<Recipe> {
+        log.debug("Delete a recipe with ID $id")
         return recipeService.delete(id)
     }
 }
