@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(RecipeController::class)
 class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) {
@@ -88,7 +87,7 @@ class RecipeControllerTest @Autowired constructor(private val mockMvc: MockMvc) 
         mockMvc.delete("/api/v1/recipe/sdfsdf") {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect {
-            status { status().isBadRequest }
+            status { isBadRequest() }
         }
 
     }
