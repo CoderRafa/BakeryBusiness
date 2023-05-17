@@ -3,8 +3,10 @@ package com.rafeng.bakery.improve.business.api
 import com.rafeng.bakery.improve.business.BakeryBusinessApplication
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -17,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @ActiveProfiles("h2")
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @SpringBootTest(
     classes = [BakeryBusinessApplication::class, LiquibaseH2TestConfig::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
