@@ -23,16 +23,21 @@ class RecipeRepositoryTest @Autowired constructor(
     @Order(1)
     @Test
     fun `Happy pass - add a new recipe to DB`() {
-        val recipeEntity = RecipeEntity()
-        recipeEntity.cookingTime = 2.0
-        recipeEntity.description = "The best recipe of Bulochka"
-        recipeEntity.name = "Bulochka"
-        recipeEntity.expirationPeriod = 2
+        val recipeEntity = createRecipeEntity()
 
         recipeEntityRepository.save(recipeEntity)
 
         checkNewRecipeEntityFields(recipeEntity)
         checkNewRecipeEntityFields(recipeEntityRepository.findById(recipeEntity.id!!).get())
+    }
+
+    private fun createRecipeEntity(): RecipeEntity {
+        return RecipeEntity().apply {
+            this.cookingTime = 2.0
+            this.description = "The best recipe of Bulochka"
+            this.name = "Bulochka"
+            this.expirationPeriod = 2
+        }
     }
 
     private fun checkNewRecipeEntityFields(recipeEntity: RecipeEntity) {
@@ -48,6 +53,18 @@ class RecipeRepositoryTest @Autowired constructor(
     fun `Happy pass - find all recipe in DB`() {
         val recipeEntities = recipeEntityRepository.findAll()
         assertThat(recipeEntities).isNotEmpty
+    }
+
+    @Order(3)
+    @Test
+    fun `Happy pass - a recipe was deleted from DB`() {
+        val recipeEntity = createRecipeEntity()
+        checkNewRecipeEntityFields(recipeEntityRepository.save(recipeEntity))
+
+        recipeEntityRepository.deleteById(recipeEntity.id!!)
+        assertThat(recipeEntityRepository.findById(recipeEntity.id!!)).isEmpty
+
+        assertThat(recipeEntityRepository.findAll()).isEmpty()
     }
 }
 

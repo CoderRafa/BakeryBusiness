@@ -1,30 +1,34 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.dto.Worker
+import com.rafeng.bakery.improve.business.service.impl.WorkerService
 import com.rafeng.bakery.improve.business.service.impl.WorkerServiceImpl
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/worker")
-class WorkerController(val workerServiceImpl: WorkerServiceImpl) {
+class WorkerController(val workerService: WorkerService) {
 
-    @PostMapping
-    fun addWorker(@RequestBody worker: Worker) {
-        workerServiceImpl.addItem(worker)
+    private val log = LoggerFactory.getLogger(WorkerController::class.java)
+
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun addWorker(@RequestBody worker: Worker): Worker {
+        log.debug("Add ne worker")
+        return workerService.save(worker)
     }
 
-    @DeleteMapping
-    fun deleteWorker(worker: Worker) {
-        workerServiceImpl.deleteItem(worker)
+    @GetMapping()
+    fun getAllWorkers(): List<Worker> {
+        log.debug("Get all workers")
+        return workerService.get()
     }
 
-    @GetMapping
-    fun getAllWorkers() {
-        workerServiceImpl.getAll()
+    @DeleteMapping("/{id}")
+    fun deleteWorker(@PathVariable("id") id: Long): List<Worker> {
+        log.debug("Delete a worker with an Id $id")
+        return workerService.delete(id)
     }
+
 }

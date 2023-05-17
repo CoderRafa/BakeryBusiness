@@ -31,6 +31,8 @@ fun createRecipe() = Recipe(id = 1, name = "test", description = "description", 
 
 fun createClient() = Client(id = 1, name = "Vasiliy", lastname = "Nikiforov", phoneNumber = "+79155658987")
 
+fun createWorker() = Worker(id = 1, name = "Lena", lastname = "Ivanova", position = SALESPERSON)
+
 fun createRandomOrder(): Order = Order(
     generateUniqueStringIdentifier(),
     mutableListOf(),
