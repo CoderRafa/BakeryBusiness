@@ -2,15 +2,9 @@ package com.rafeng.bakery.improve.business.model.dto
 
 import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
 import com.rafeng.bakery.improve.business.model.Allergen
-import com.rafeng.bakery.improve.business.model.Filling
-import com.rafeng.bakery.improve.business.model.FillingType
-import com.rafeng.bakery.improve.business.model.ItemFilling
 import com.rafeng.bakery.improve.business.model.ItemSize
 import com.rafeng.bakery.improve.business.model.ItemSmell
-import com.rafeng.bakery.improve.business.model.ItemTopping
 import com.rafeng.bakery.improve.business.model.TasteType
-import com.rafeng.bakery.improve.business.model.Topping
-import com.rafeng.bakery.improve.business.model.ToppingType
 import java.time.LocalDateTime
 
 /**
@@ -23,27 +17,27 @@ data class Item(
     val size: ItemSize = ItemSize.SMALL,
     val smell: ItemSmell = ItemSmell.STRONG,
     val tasteType: TasteType = TasteType.SWEET,
-    val filling: List<ItemFilling> = listOf(
-        ItemFilling(
-            Filling(
-                "jam",
-                "nice jam",
-                FillingType.JAM,
-                TasteType.SWEET
-            ),
-            20.0
-        )
-    ),
-    val topping: List<ItemTopping> = listOf(
-        ItemTopping(
-            Topping(
-                "shaving",
-                "nice shaving",
-                ToppingType.SHAVING,
-                TasteType.SWEET
-                ),
-            20.0
-            )),
+//    val filling: List<ItemFilling> = listOf(
+//        ItemFilling(
+//            Filling(
+//                "jam",
+//                "nice jam",
+//                FillingType.JAM,
+//                TasteType.SWEET
+//            ),
+//            20.0
+//        )
+//    ),
+//    val topping: List<ItemTopping> = listOf(
+//        ItemTopping(
+//            Topping(
+//                "shaving",
+//                "nice shaving",
+//                ToppingType.SHAVING,
+//                TasteType.SWEET
+//                ),
+//            20.0
+//            )),
     val calories: Int,
     val allergens: List<Allergen> = listOf(Allergen.WALNUT),
     val isVegan: Boolean = false,
@@ -57,8 +51,8 @@ data class Item(
         size: ItemSize,
         smell: ItemSmell,
         tasteType: TasteType,
-        filling: List<ItemFilling>,
-        topping: List<ItemTopping>,
+//        filling: List<ItemFilling>,
+//        topping: List<ItemTopping>,
         calories: Int,
         allergens: List<Allergen>,
         isVegan: Boolean,
@@ -71,8 +65,8 @@ data class Item(
         size,
         smell,
         tasteType,
-        filling,
-        topping,
+//        filling,
+//        topping,
         calories,
         allergens,
         isVegan,

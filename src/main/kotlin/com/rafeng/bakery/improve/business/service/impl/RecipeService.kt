@@ -20,6 +20,11 @@ class RecipeService(private val recipeEntityRepository: RecipeEntityRepository) 
         return recipeEntityRepository.findAll().map { it.toDto() }
     }
 
+    fun get(id: Long): Recipe {
+        log.debug("Get all recipes")
+        return recipeEntityRepository.findById(id).map { it.toDto() }.orElseThrow()
+    }
+
     fun delete(id: Long): List<Recipe> {
         log.debug("Delete recipe with ID $id")
         recipeEntityRepository.deleteById(id)
