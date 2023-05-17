@@ -8,7 +8,7 @@ import com.rafeng.bakery.improve.business.model.ItemSize
 import com.rafeng.bakery.improve.business.model.ItemSmell
 import com.rafeng.bakery.improve.business.model.ItemTopping
 import com.rafeng.bakery.improve.business.model.SellItem
-import com.rafeng.bakery.improve.business.model.Taste
+import com.rafeng.bakery.improve.business.model.TasteType
 import com.rafeng.bakery.improve.business.model.Topping
 import com.rafeng.bakery.improve.business.model.ToppingType
 import com.rafeng.bakery.improve.business.model.dto.Item
@@ -95,9 +95,9 @@ fun createRandomItemByRecipe(recipe: Recipe): Item {
         Random.nextDouble(),
         ItemSize.values()[Random.nextInt(0, ItemSize.values().size - 1)],
         ItemSmell.STRONG,
-        Taste.SWEET,
-        listOf(ItemFilling(Filling("test", "super test", FillingType.JAM, Taste.SWEET), 10.0)),
-        listOf(ItemTopping(Topping("test", "super test", ToppingType.CREAM, Taste.SWEET), 10.0)),
+        TasteType.SWEET,
+        listOf(ItemFilling(Filling("test", "super test", FillingType.JAM, TasteType.SWEET), 10.0)),
+        listOf(ItemTopping(Topping("test", "super test", ToppingType.CREAM, TasteType.SWEET), 10.0)),
         300,
         listOf(),
         false,

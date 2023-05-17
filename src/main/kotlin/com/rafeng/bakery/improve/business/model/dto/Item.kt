@@ -8,7 +8,7 @@ import com.rafeng.bakery.improve.business.model.ItemFilling
 import com.rafeng.bakery.improve.business.model.ItemSize
 import com.rafeng.bakery.improve.business.model.ItemSmell
 import com.rafeng.bakery.improve.business.model.ItemTopping
-import com.rafeng.bakery.improve.business.model.Taste
+import com.rafeng.bakery.improve.business.model.TasteType
 import com.rafeng.bakery.improve.business.model.Topping
 import com.rafeng.bakery.improve.business.model.ToppingType
 import java.time.LocalDateTime
@@ -22,14 +22,14 @@ data class Item(
     val weight: Double,
     val size: ItemSize = ItemSize.SMALL,
     val smell: ItemSmell = ItemSmell.STRONG,
-    val taste: Taste = Taste.SWEET,
+    val tasteType: TasteType = TasteType.SWEET,
     val filling: List<ItemFilling> = listOf(
         ItemFilling(
             Filling(
                 "jam",
                 "nice jam",
                 FillingType.JAM,
-                Taste.SWEET
+                TasteType.SWEET
             ),
             20.0
         )
@@ -40,7 +40,7 @@ data class Item(
                 "shaving",
                 "nice shaving",
                 ToppingType.SHAVING,
-                Taste.SWEET
+                TasteType.SWEET
                 ),
             20.0
             )),
@@ -56,7 +56,7 @@ data class Item(
         weight: Double,
         size: ItemSize,
         smell: ItemSmell,
-        taste: Taste,
+        tasteType: TasteType,
         filling: List<ItemFilling>,
         topping: List<ItemTopping>,
         calories: Int,
@@ -70,7 +70,7 @@ data class Item(
         weight,
         size,
         smell,
-        taste,
+        tasteType,
         filling,
         topping,
         calories,

@@ -4,7 +4,7 @@ import com.rafeng.bakery.improve.business.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.*
 import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.ItemSmell.STRONG
-import com.rafeng.bakery.improve.business.model.Taste.SWEET
+import com.rafeng.bakery.improve.business.model.TasteType.SWEET
 import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository

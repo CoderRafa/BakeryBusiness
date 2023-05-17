@@ -18,8 +18,9 @@ class WorkerEntity {
     @Column(name = "lastname", nullable = false)
     lateinit var lastname: String
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "position", nullable = false)
-    lateinit var position: Position
+    open var position: Position = Position.SALESPERSON
 }
 
 fun WorkerEntity.toDto() = Worker(id, name, lastname, position)

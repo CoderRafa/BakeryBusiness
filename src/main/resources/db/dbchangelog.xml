@@ -6,5 +6,6 @@
 
     <include file="migration/V1/01-01-add-table-recipe.yaml" relativeToChangelogFile="true"/>
     <include file="migration/V1/01-02-add-table-client.yaml" relativeToChangelogFile="true"/>
+    <include file="db/migration/V1/01-03-add-table-worker.yaml"/>
 
 </databaseChangeLog>

@@ -1,7 +1,17 @@
 package com.rafeng.bakery.improve.business.util
 
 import com.rafeng.bakery.improve.business.common.generateUniqueStringIdentifier
-import com.rafeng.bakery.improve.business.model.*
+import com.rafeng.bakery.improve.business.model.Client
+import com.rafeng.bakery.improve.business.model.Filling
+import com.rafeng.bakery.improve.business.model.FillingType
+import com.rafeng.bakery.improve.business.model.ItemFilling
+import com.rafeng.bakery.improve.business.model.ItemSize
+import com.rafeng.bakery.improve.business.model.ItemSmell
+import com.rafeng.bakery.improve.business.model.ItemTopping
+import com.rafeng.bakery.improve.business.model.SellItem
+import com.rafeng.bakery.improve.business.model.TasteType
+import com.rafeng.bakery.improve.business.model.Topping
+import com.rafeng.bakery.improve.business.model.ToppingType
 import com.rafeng.bakery.improve.business.model.dto.Item
 import com.rafeng.bakery.improve.business.model.dto.Order
 import com.rafeng.bakery.improve.business.model.dto.PaymentType.CASH
@@ -17,9 +27,9 @@ fun createRandomItemByRecipe(recipe: Recipe) = Item(
     Random.nextDouble(),
     ItemSize.values()[Random.nextInt(0, ItemSize.values().size - 1)],
     ItemSmell.STRONG,
-    Taste.SWEET,
-    listOf(ItemFilling(Filling("test", "description", FillingType.JAM, Taste.SWEET), 10.0)),
-    listOf(ItemTopping(Topping("test", "description", ToppingType.CREAM, Taste.SWEET), 10.0)),
+    TasteType.SWEET,
+    listOf(ItemFilling(Filling("test", "description", FillingType.JAM, TasteType.SWEET), 10.0)),
+    listOf(ItemTopping(Topping("test", "description", ToppingType.CREAM, TasteType.SWEET), 10.0)),
     300,
     listOf(),
     false,
