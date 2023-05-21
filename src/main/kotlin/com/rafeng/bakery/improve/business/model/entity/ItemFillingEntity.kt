@@ -1,47 +1,39 @@
 package com.rafeng.bakery.improve.business.model.entity
 
-import com.rafeng.bakery.improve.business.model.Filling
-import jakarta.persistence.*
-import com.rafeng.bakery.improve.business.model.ItemFilling as ItemFilling1
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
 
-@Entity
-@Table(name = "itemFilling")
+@Entity(name = "item_filling")
 class ItemFillingEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_filling_sequence")
     @Column(name = "id", nullable = false)
     var id: Long? = null
 
     @Column(name = "name", nullable = false)
     lateinit var name: String
 
-    @Column(name = "weight", nullable = false)
+    @Column(name = "wight", nullable = false)
     var weight: Double = 0.0
 
     @Column(name = "ratio", nullable = false)
-    var ratio: Float = 0f
+    var ratio: Float = -1F
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "desctiption")
     lateinit var description: String
 
-    @OneToMany(mappedBy = "filling")
-    private List<Filling> fillings
-
-    @Entity
-    @Table(name = "filling")
-    class Filling {
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name = "id", nullable = false)
-        private val id: Long? = null
-
-        @ManyToOne
-        private fillings: ItemFillingEntity
-    }
-
-    @ElementCollection
-    private listFilling: List<Filling> = listOf()
-
-    @Column(name = "filling", nullable = false)
-    lateinit var filling: MutableList<Filling>
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "item_filling_to_filling",
+        joinColumns = [JoinColumn(name = "item_filling_id")],
+        inverseJoinColumns = [JoinColumn(name = "filling_id")]
+    )
+    lateinit var fillings: List<FillingEntity>
 }

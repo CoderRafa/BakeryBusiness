@@ -1,0 +1,172 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1684655748949-1
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: filling_sequence
+            startValue: 1
+  - changeSet:
+      id: 1684655748949-2
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: item_filling_sequence
+            startValue: 1
+  - changeSet:
+      id: 1684655748949-3
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: topping_sequence
+            startValue: 1
+  - changeSet:
+      id: 1684655748949-4
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_filling
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: filling_type
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: taste_type
+                  type: VARCHAR(255)
+            tableName: filling
+  - changeSet:
+      id: 1684655748949-5
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_item_filling
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: wight
+                  type: DOUBLE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ratio
+                  type: FLOAT
+              - column:
+                  name: desctiption
+                  type: VARCHAR(255)
+            tableName: item_filling
+  - changeSet:
+      id: 1684655748949-6
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: fillings_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: item_fillings_id
+                  type: BIGINT
+            tableName: item_filling_to_filling
+  - changeSet:
+      id: 1684655748949-7
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_topping
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: type
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: taste_type
+                  type: VARCHAR(255)
+            tableName: topping
+  - changeSet:
+      id: 1684655748949-8
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: fillings_id
+            baseTableName: item_filling_to_filling
+            constraintName: fk_itefiltofil_on_filling_entity
+            referencedColumnNames: id
+            referencedTableName: filling
+  - changeSet:
+      id: 1684655748949-9
+      author: Kirill Iakimchuk
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: item_fillings_id
+            baseTableName: item_filling_to_filling
+            constraintName: fk_itefiltofil_on_item_filling_entity
+            referencedColumnNames: id
+            referencedTableName: item_filling
+
