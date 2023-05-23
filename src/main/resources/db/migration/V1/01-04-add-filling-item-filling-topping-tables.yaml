@@ -104,12 +104,12 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: fillings_id
+                  name: filling_id
                   type: BIGINT
               - column:
                   constraints:
                     nullable: false
-                  name: item_fillings_id
+                  name: item_filling_id
                   type: BIGINT
             tableName: item_filling_to_filling
   - changeSet:
@@ -153,7 +153,7 @@ databaseChangeLog:
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: fillings_id
+            baseColumnNames: filling_id
             baseTableName: item_filling_to_filling
             constraintName: fk_itefiltofil_on_filling_entity
             referencedColumnNames: id
@@ -164,7 +164,7 @@ databaseChangeLog:
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: item_fillings_id
+            baseColumnNames: item_filling_id
             baseTableName: item_filling_to_filling
             constraintName: fk_itefiltofil_on_item_filling_entity
             referencedColumnNames: id

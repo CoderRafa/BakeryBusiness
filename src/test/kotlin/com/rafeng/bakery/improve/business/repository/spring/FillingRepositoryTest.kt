@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.transaction.annotation.Transactional
 
 @ActiveProfiles("postgres")
 @SpringBootTest(classes = [LiquibaseTestConfig::class])
@@ -20,13 +21,21 @@ class FillingRepositoryTest @Autowired constructor(
 ) {
     @Order(1)
     @Test
+    @Transactional
     fun `Happy pass - add a new filling to DB`() {
         val fillingEntity = createFillingEntity()
         fillingEntityRepository.save(fillingEntity)
         assertThat(fillingEntity.id).isNotNull
         assertThat(fillingEntity.itemFillings).isNotEmpty
-        assertThat(itemFillingEntityRepository.findAll()).isNotEmpty
-//        assertThat(itemFillingEntityRepository.findAll().first().fillings).isNotEmpty
+    }
+
+    @Order(2)
+    @Test
+    @Transactional
+    fun `Happy pass - check item filling record`() {
+        val itemFillingEntities = itemFillingEntityRepository.findAll()
+        assertThat(itemFillingEntities).isNotEmpty
+        assertThat(itemFillingEntities.first().fillings).isNotEmpty
     }
 
     private fun createFillingEntity(): FillingEntity {

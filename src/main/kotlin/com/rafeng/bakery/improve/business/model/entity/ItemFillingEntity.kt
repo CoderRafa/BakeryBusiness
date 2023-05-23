@@ -7,8 +7,6 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 
 @Entity(name = "item_filling")
@@ -30,11 +28,7 @@ class ItemFillingEntity {
     @Column(name = "desctiption")
     lateinit var description: String
 
-    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "item_filling_to_filling",
-        joinColumns = [JoinColumn(name = "item_filling_id")],
-        inverseJoinColumns = [JoinColumn(name = "filling_id")]
-    )
+
+    @ManyToMany(cascade = [CascadeType.ALL], mappedBy = "itemFillings", fetch = FetchType.LAZY)
     lateinit var fillings: List<FillingEntity>
 }

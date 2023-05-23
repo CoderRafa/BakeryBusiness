@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: ${POSTGRES_USER:test_build}
+    password: ${POSTGRES_PASSWORD:test_build}
+    url: jdbc:postgresql://${POSTGRES_HOSTNAME:localhost}:5434/${POSTGRES_DB:test_build}
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.show_sql: true
+    hibernate.ddl-auto: none
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/dbchangelog.xml
