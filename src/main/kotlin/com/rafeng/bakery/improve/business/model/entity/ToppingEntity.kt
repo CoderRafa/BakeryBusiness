@@ -1,14 +1,9 @@
 package com.rafeng.bakery.improve.business.model.entity
 
 import com.rafeng.bakery.improve.business.model.TasteType
+import com.rafeng.bakery.improve.business.model.Topping
 import com.rafeng.bakery.improve.business.model.ToppingType
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity(name = "topping")
 class ToppingEntity {
@@ -25,9 +20,14 @@ class ToppingEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    lateinit var type: ToppingType
+    lateinit var toppingType: ToppingType
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tasteType", nullable = false)
     lateinit var tasteType: TasteType
+
+    @ManyToMany(mappedBy = "toppings", fetch = FetchType.LAZY)
+    lateinit var itemToppings: List<ItemToppingEntity>
 }
+
+fun ToppingEntity.toDto() = Topping(id, name, description, toppingType, tasteType)
