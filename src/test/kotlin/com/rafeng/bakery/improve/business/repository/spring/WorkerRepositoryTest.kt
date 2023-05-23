@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles
 
 
 @ActiveProfiles("h2")
-@SpringBootTest(classes = [LiquibaseH2TestConfig::class])
+@SpringBootTest(classes = [LiquibaseTestConfig::class])
 class WorkerRepositoryTest @Autowired constructor(
     val workerEntityRepository: WorkerEntityRepository
 ) {

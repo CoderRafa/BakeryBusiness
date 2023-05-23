@@ -5,22 +5,28 @@ import com.rafeng.bakery.improve.business.model.FillingType.*
 import com.rafeng.bakery.improve.business.model.TasteType.SWEET
 import com.rafeng.bakery.improve.business.model.entity.FillingEntity
 import com.rafeng.bakery.improve.business.model.entity.ItemFillingEntity
-import com.rafeng.bakery.improve.business.model.entity.ToppingEntity
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
-@ActiveProfiles("h2")
-@SpringBootTest(classes = [LiquibaseH2TestConfig::class])
+@ActiveProfiles("postgres")
+@SpringBootTest(classes = [LiquibaseTestConfig::class])
 class FillingRepositoryTest @Autowired constructor(
-        val fillingEntityRepository: FillingEntityRepository
+    val fillingEntityRepository: FillingEntityRepository,
+    val itemFillingEntityRepository: ItemFillingEntityRepository
 ) {
     @Order(1)
     @Test
     fun `Happy pass - add a new filling to DB`() {
         val fillingEntity = createFillingEntity()
+        fillingEntityRepository.save(fillingEntity)
+        assertThat(fillingEntity.id).isNotNull
+        assertThat(fillingEntity.itemFillings).isNotEmpty
+        assertThat(itemFillingEntityRepository.findAll()).isNotEmpty
+//        assertThat(itemFillingEntityRepository.findAll().first().fillings).isNotEmpty
     }
 
     private fun createFillingEntity(): FillingEntity {
@@ -34,20 +40,11 @@ class FillingRepositoryTest @Autowired constructor(
     }
 
     private fun createItemFillingEntities(): List<ItemFillingEntity> {
-        return listOf( ItemFillingEntity(
-            name = "Straw",
-            weight = 20.0,
-            ratio = 2F,
-            description = "It is sweet",
-            filling = listOf(
-                    Filling(
-                            name = "Cool straw",
-                            description = "Really cool straw",
-                            fillingType = LIQUID,
-                            tasteType = SWEET
-                    ).toEntity()
-                )
-            )
-        )
+        return listOf(ItemFillingEntity().apply {
+            this.name = "Straw"
+            this.weight = 20.0
+            this.ratio = 2F
+            this.description = "It is sweet"
+        })
     }
 }

@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.0.3-SNAPSHOT"
+    id("org.springframework.boot") version "3.1.0-SNAPSHOT"
     id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
+    kotlin("jvm") version "1.8.20"
+    kotlin("plugin.spring") version "1.8.20"
 }
 
 group = "com.rafengimprove"
@@ -28,13 +28,15 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("org.liquibase:liquibase-core:4.20.0")
+    implementation("org.liquibase:liquibase-core:4.22.0")
+    implementation("org.hibernate:hibernate-core:6.1.7.Final")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    runtimeOnly("com.h2database:h2")
-
+    testImplementation("org.postgresql:postgresql:42.6.0")
+    testImplementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 }
 
 tasks.withType<KotlinCompile> {

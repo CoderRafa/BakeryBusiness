@@ -3,6 +3,7 @@ package com.rafeng.bakery.improve.business.model.entity
 import com.rafeng.bakery.improve.business.model.Filling
 import com.rafeng.bakery.improve.business.model.FillingType
 import com.rafeng.bakery.improve.business.model.TasteType
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -34,7 +35,7 @@ class FillingEntity {
     @Column(name = "taste_type", nullable = false)
     lateinit var tasteType: TasteType
 
-    @ManyToMany(mappedBy = "fillings", fetch = FetchType.LAZY)
+    @ManyToMany(cascade = [CascadeType.ALL], mappedBy = "fillings", fetch = FetchType.LAZY)
     lateinit var itemFillings: List<ItemFillingEntity>
 }
 

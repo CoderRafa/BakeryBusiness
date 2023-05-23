@@ -1,5 +1,6 @@
 package com.rafeng.bakery.improve.business.model.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -29,7 +30,7 @@ class ItemFillingEntity {
     @Column(name = "desctiption")
     lateinit var description: String
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinTable(
         name = "item_filling_to_filling",
         joinColumns = [JoinColumn(name = "item_filling_id")],

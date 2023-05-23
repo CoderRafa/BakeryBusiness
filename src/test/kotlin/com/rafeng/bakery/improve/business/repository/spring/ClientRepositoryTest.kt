@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("h2")
-@SpringBootTest(classes = [LiquibaseH2TestConfig::class])
+@SpringBootTest(classes = [LiquibaseTestConfig::class])
 class ClientRepositoryTest @Autowired constructor(
     val clientEntityRepository: ClientEntityRepository
 ) {
@@ -34,10 +34,10 @@ class ClientRepositoryTest @Autowired constructor(
         }
     }
     private fun checkNewClientEntityFields(clientEntity: ClientEntity) {
-        assertThat(clientEntity.id).isNotNull()
+        assertThat(clientEntity.id).isNotNull
         assertThat(clientEntity.name).isEqualTo("Vasiliy")
-        assertThat(clientEntity.lastname).isNotNull()
-        assertThat(clientEntity.phoneNumber).isNotNull()
+        assertThat(clientEntity.lastname).isNotNull
+        assertThat(clientEntity.phoneNumber).isNotNull
     }
 
     @Order(2)

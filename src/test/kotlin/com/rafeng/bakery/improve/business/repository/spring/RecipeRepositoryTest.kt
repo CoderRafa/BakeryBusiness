@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 
 
 @ActiveProfiles("h2")
-@SpringBootTest(classes = [LiquibaseH2TestConfig::class])
+@SpringBootTest(classes = [LiquibaseTestConfig::class])
 class RecipeRepositoryTest @Autowired constructor(
     val recipeEntityRepository: RecipeEntityRepository
 ) {
@@ -73,4 +73,4 @@ class RecipeRepositoryTest @Autowired constructor(
 @EnableTransactionManagement
 @EntityScan("com.rafeng.bakery.improve.business.model.entity")
 @EnableJpaRepositories(basePackages = ["com.rafeng.bakery.improve.business.repository.spring"])
-class LiquibaseH2TestConfig
+class LiquibaseTestConfig
