@@ -6,14 +6,17 @@ import com.rafeng.bakery.improve.business.model.TasteType.SWEET
 import com.rafeng.bakery.improve.business.model.entity.FillingEntity
 import com.rafeng.bakery.improve.business.model.entity.ItemFillingEntity
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 
-@ActiveProfiles("postgres")
+@ActiveProfiles("h2")
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @SpringBootTest(classes = [LiquibaseTestConfig::class])
 class FillingRepositoryTest @Autowired constructor(
     val fillingEntityRepository: FillingEntityRepository,
@@ -21,7 +24,6 @@ class FillingRepositoryTest @Autowired constructor(
 ) {
     @Order(1)
     @Test
-    @Transactional
     fun `Happy pass - add a new filling to DB`() {
         val fillingEntity = createFillingEntity()
         fillingEntityRepository.save(fillingEntity)

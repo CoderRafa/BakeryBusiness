@@ -44,6 +44,11 @@ class FillingEntity {
         inverseJoinColumns = [JoinColumn(name = "item_filling_id")]
     )
     lateinit var itemFillings: List<ItemFillingEntity>
+    override fun toString(): String {
+        return "FillingEntity(id=$id, name='$name', description='$description', fillingType=$fillingType, tasteType=$tasteType)"
+    }
+
+
 }
 
 fun FillingEntity.toDto() = Filling(id, name, description, fillingType, tasteType)

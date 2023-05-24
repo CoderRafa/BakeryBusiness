@@ -33,8 +33,8 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    testImplementation("org.postgresql:postgresql:42.6.0")
-    testImplementation("com.h2database:h2")
+    implementation("org.postgresql:postgresql:42.6.0")
+    implementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 }
