@@ -28,11 +28,12 @@ class ToppingEntity {
 
     @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinTable(
-            name = "item_topping_to_topping",
-            joinColumns = [JoinColumn(name = "topping_id")],
-            inverseJoinColumns = [JoinColumn(name = "item_topping_id")]
+        name = "item_topping_to_topping",
+        joinColumns = [JoinColumn(name = "item_topping_id")],
+        inverseJoinColumns = [JoinColumn(name = "topping_id")]
     )
     lateinit var itemToppings: List<ItemToppingEntity>
+
     override fun toString(): String {
         return ("ToppingEntity(id=$id, name=$name, description=$description, toppingType=$toppingType, tasteType=$tasteType)")
     }

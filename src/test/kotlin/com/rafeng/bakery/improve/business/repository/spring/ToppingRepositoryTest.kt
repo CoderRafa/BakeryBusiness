@@ -1,8 +1,6 @@
 package com.rafeng.bakery.improve.business.repository.spring
 
-import com.rafeng.bakery.improve.business.model.TasteType
 import com.rafeng.bakery.improve.business.model.TasteType.SWEET
-import com.rafeng.bakery.improve.business.model.ToppingType
 import com.rafeng.bakery.improve.business.model.ToppingType.*
 import com.rafeng.bakery.improve.business.model.entity.ItemToppingEntity
 import com.rafeng.bakery.improve.business.model.entity.ToppingEntity
@@ -23,17 +21,17 @@ class ToppingRepositoryTest @Autowired constructor(
     val toppingEntityRepository: ToppingEntityRepository,
     val itemToppingEntityRepository: ItemToppingEntityRepository
 ) {
-    @Order(1)
     @Test
+    @Order(1)
     fun `Happy pass - add a new topping to the DB`() {
         val toppingEntity = createToppingEntity()
         toppingEntityRepository.save(toppingEntity)
-        assertThat(toppingEntity.id).isNotNull()
+        assertThat(toppingEntity.id).isNotNull
         assertThat(toppingEntity.itemToppings).isNotEmpty
     }
 
-    @Order(2)
     @Test
+    @Order(2)
     @Transactional
     fun `Happy pass - check item topping record`() {
         val itemToppingEntities = itemToppingEntityRepository.findAll()
@@ -41,8 +39,8 @@ class ToppingRepositoryTest @Autowired constructor(
         assertThat(itemToppingEntities.first().toppings).isNotEmpty
     }
 
-    @Order(3)
     @Test
+    @Order(3)
     fun `Happy pass - get all toppings from the DB`() {
         val toppingEntities = toppingEntityRepository.findAll()
         assertThat(toppingEntities).isNotEmpty

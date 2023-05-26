@@ -1,12 +1,20 @@
 package com.rafeng.bakery.improve.business.model.entity
 
-import com.rafeng.bakery.improve.business.model.Topping
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToMany
+import jakarta.persistence.SequenceGenerator
 
 @Entity(name = "item_topping")
 class ItemToppingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_topping_sequence")
+    @SequenceGenerator(name = "item_topping_sequence", allocationSize = 10)
     @Column(name = "id", nullable = false)
     val id: Long? = null
 
@@ -22,12 +30,7 @@ class ItemToppingEntity {
     @Column(name = "description", nullable = false)
     lateinit var description: String
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "item_topping_to_topping",
-            joinColumns = [JoinColumn(name = "item_topping_id")],
-            inverseJoinColumns = [JoinColumn(name = "topping_id")]
-    )
+    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "itemToppings")
     lateinit var toppings: List<ToppingEntity>
 
 }
