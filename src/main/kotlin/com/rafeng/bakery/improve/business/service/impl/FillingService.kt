@@ -4,6 +4,8 @@ import com.rafeng.bakery.improve.business.model.Filling
 import com.rafeng.bakery.improve.business.model.entity.toDto
 import com.rafeng.bakery.improve.business.model.toEntity
 import com.rafeng.bakery.improve.business.notification.event.CreateFillingEvent
+import com.rafeng.bakery.improve.business.notification.event.DeleteFillingEvent
+import com.rafeng.bakery.improve.business.notification.event.GetAllFillingsEvent
 import com.rafeng.bakery.improve.business.notification.publisher.EventPublisher
 import com.rafeng.bakery.improve.business.repository.spring.FillingEntityRepository
 import org.slf4j.LoggerFactory
@@ -27,12 +29,20 @@ class FillingService(
 
     fun get(): List<Filling> {
         log.debug("Get all fillings")
-        return fillingEntityRepository.findAll().map { it.toDto() }
+        return fillingEntityRepository.findAll().map { it.toDto() }.also {
+            if(it.isNotEmpty()){
+                eventPublisher.publishEvent(GetAllFillingsEvent(it, "Got all fillings"))
+            }
+        }
     }
 
     fun delete(id: Long): List<Filling> {
         log.debug("Delete a filling with an Id $id")
         fillingEntityRepository.deleteById(id)
-        return fillingEntityRepository.findAll().map { it.toDto() }
+        return fillingEntityRepository.findAll().map { it.toDto() }.also { fillingList ->
+            if(!fillingList.map { it.id }.contains(id)){
+                eventPublisher.publishEvent(DeleteFillingEvent(id, "Filling with an Id $id was deleted"))
+            }
+        }
     }
 }

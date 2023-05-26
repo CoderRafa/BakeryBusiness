@@ -1,0 +1,11 @@
+package com.rafeng.bakery.improve.business.notification.listener
+
+import com.rafeng.bakery.improve.business.notification.event.DeleteToppingEvent
+import org.springframework.context.ApplicationListener
+
+class DeleteToppingEmailEventListener : ApplicationListener<DeleteToppingEvent> {
+    override fun onApplicationEvent(event: DeleteToppingEvent) {
+        println("Handle a delete topping event with a message ${event.message}")
+        println("Handle an object ${event.source}")
+    }
+}
