@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.notification.event
+package com.rafeng.bakery.improve.business.notification.topping.event
 
 import org.springframework.context.ApplicationEvent
 

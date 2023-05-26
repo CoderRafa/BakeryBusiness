@@ -1,6 +1,6 @@
-package com.rafeng.bakery.improve.business.notification.listener
+package com.rafeng.bakery.improve.business.notification.topping.listener
 
-import com.rafeng.bakery.improve.business.notification.event.GetAllToppingsEvent
+import com.rafeng.bakery.improve.business.notification.topping.event.GetAllToppingsEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 
