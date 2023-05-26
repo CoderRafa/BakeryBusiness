@@ -29,9 +29,9 @@ class FillingService(
 
     fun get(): List<Filling> {
         log.debug("Get all fillings")
-        return fillingEntityRepository.findAll().map { it.toDto() }.also {
-            if(it.isNotEmpty()){
-                eventPublisher.publishEvent(GetAllFillingsEvent(it, "Got all fillings"))
+        return fillingEntityRepository.findAll().map { it.toDto() }.also { fillings ->
+            if(fillings.isNotEmpty()){
+                eventPublisher.publishEvent(GetAllFillingsEvent(fillings.map { it.id!! }, "Got all fillings"))
             }
         }
     }
