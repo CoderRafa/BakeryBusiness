@@ -8,5 +8,6 @@
     <include file="migration/V1/01-02-add-table-client.yaml" relativeToChangelogFile="true"/>
     <include file="db/migration/V1/01-03-add-table-worker.yaml"/>
     <include file="db/migration/V1/01-04-add-filling-item-filling-topping-tables.yaml"/>
+    <include file="db/migration/V1/01-05-item-topping-tables.yaml"/>
 
 </databaseChangeLog>

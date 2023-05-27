@@ -40,6 +40,29 @@ class FillingRepositoryTest @Autowired constructor(
         assertThat(itemFillingEntities.first().fillings).isNotEmpty
     }
 
+    @Order(3)
+    @Test
+    fun `Happy pass - get all fillings from the DB`() {
+        val fillingEntities = fillingEntityRepository.findAll()
+        assertThat(fillingEntities).isNotEmpty
+        assertThat(fillingEntities).size().isEqualTo(1)
+    }
+
+    @Order(4)
+    @Test
+    fun `Happy pass - delete a filling from the DB`() {
+        val fillingEntity = createFillingEntity()
+
+        fillingEntityRepository.save(fillingEntity)
+
+        assertThat(fillingEntity.id).isNotNull()
+        assertThat(fillingEntityRepository.findAll()).size().isEqualTo(2)
+
+        fillingEntityRepository.deleteById(fillingEntity.id!!)
+
+        assertThat(fillingEntityRepository.findAll()).size().isEqualTo(1)
+    }
+
     private fun createFillingEntity(): FillingEntity {
         return FillingEntity().apply {
             this.name = "Sweet straw"
