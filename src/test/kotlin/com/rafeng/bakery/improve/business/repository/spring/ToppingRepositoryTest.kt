@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.model.entity.ItemToppingEntity
 import com.rafeng.bakery.improve.business.model.entity.ToppingEntity
 import jakarta.transaction.Transactional
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -44,6 +45,16 @@ class ToppingRepositoryTest @Autowired constructor(
     fun `Happy pass - get all toppings from the DB`() {
         val toppingEntities = toppingEntityRepository.findAll()
         assertThat(toppingEntities).isNotEmpty
+    }
+
+    @Test
+    @Order(4)
+    fun `Happy pass - delete a topping from the DB`() {
+        val toppingEntityToBeDeleted = createToppingEntity()
+        toppingEntityRepository.save(toppingEntityToBeDeleted)
+        assertThat(toppingEntityRepository.findAll().map { it.id }).contains(toppingEntityToBeDeleted.id)
+        toppingEntityRepository.deleteById(toppingEntityToBeDeleted.id!!)
+        assertFalse((toppingEntityRepository.findAll().map { it.id }).contains(toppingEntityToBeDeleted.id))
     }
 
     private fun createToppingEntity(): ToppingEntity {
