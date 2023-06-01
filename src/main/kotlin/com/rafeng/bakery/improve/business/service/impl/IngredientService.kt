@@ -17,7 +17,7 @@ class IngredientService(
         return ingredientRepository.save(dto.toEntity()).toDto()
     }
 
-    fun get() : List<Ingredient> {
+    fun getAll() : List<Ingredient> {
         log.debug("Get all ingredients")
         return ingredientRepository.findAll().map { it.toDto() }
     }
