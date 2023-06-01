@@ -4,7 +4,6 @@ import com.rafeng.bakery.improve.business.model.dto.Ingredient
 import com.rafeng.bakery.improve.business.repository.spring.IngredientRepository
 import com.rafeng.bakery.improve.business.repository.spring.LiquibaseTestConfig
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.`in`
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -28,15 +27,7 @@ class IngredientServiceTest @Autowired constructor (
     @Order(1)
     @Test
     fun `Happy pass - add an ingredient to the DB`() {
-        val ingredient = createIngredient()
-
-        val result = ingredientService.save(ingredient)
-
-        assertThat(result).isNotNull
-        assertThat(result.name).isEqualTo("Milk")
-        assertThat(result.description).isEqualTo("Whole milk")
-        assertThat(result.productionDate).isEqualTo("28.05.2023")
-        assertThat(result.expirationDate).isEqualTo("05.06.2023")
+        checkIngredient(ingredientService.save(createIngredient()))
     }
 
     @Order(2)
@@ -44,10 +35,16 @@ class IngredientServiceTest @Autowired constructor (
     fun `Happy pass - get all ingredients`() {
         val ingredients = ingredientService.getAll()
         assertThat(ingredients.size).isEqualTo(1)
-        assertThat(ingredients.map { it.name }.first()).isEqualTo("Milk")
-        assertThat(ingredients.map { it.description}.first()).isEqualTo("Whole milk")
+        checkIngredient(ingredients.first())
     }
 
+    private fun checkIngredient(result: Ingredient) {
+        assertThat(result).isNotNull
+        assertThat(result.name).isEqualTo("Milk")
+        assertThat(result.description).isEqualTo("Whole milk")
+        assertThat(result.productionDate).isEqualTo("28.05.2023")
+        assertThat(result.expirationDate).isEqualTo("05.06.2023")
+    }
 
     fun createIngredient(): Ingredient {
         return Ingredient(
