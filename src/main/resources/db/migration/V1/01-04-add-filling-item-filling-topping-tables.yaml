@@ -139,7 +139,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: type
+                  name: topping_type
                   type: VARCHAR(255)
               - column:
                   constraints:

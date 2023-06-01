@@ -19,7 +19,7 @@ class ToppingEntity {
     lateinit var description: String
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "toppingType", nullable = false)
     lateinit var toppingType: ToppingType
 
     @Enumerated(EnumType.STRING)

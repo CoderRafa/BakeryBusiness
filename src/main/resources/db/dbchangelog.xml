@@ -9,5 +9,6 @@
     <include file="db/migration/V1/01-03-add-table-worker.yaml"/>
     <include file="db/migration/V1/01-04-add-filling-item-filling-topping-tables.yaml"/>
     <include file="db/migration/V1/01-05-item-topping-tables.yaml"/>
+    <include file="db/migration/V1/01-06-add-table-ingredient.yaml"/>
 
 </databaseChangeLog>
