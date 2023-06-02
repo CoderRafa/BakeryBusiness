@@ -34,27 +34,12 @@ class IngredientServiceTest @Autowired constructor(
         checkIngredient(ingredientService.save(createIngredient()))
     }
 
-    @Order(2)
-    @Test
-    fun `Negative pass - add an ingredient with missing name`() {
-
-    }
-
     @Order(3)
     @Test
     fun `Happy pass - get all ingredients`() {
         val ingredients = ingredientService.getAll()
         assertThat(ingredients.size).isEqualTo(1)
         checkIngredient(ingredients.first())
-    }
-
-    @Order(4)
-    @Test
-    fun `Negative pass - get all without nothing to get`() {
-        val toBeDeletedIngredient = createIngredient()
-        ingredientService.save(toBeDeletedIngredient)
-        ingredientService.getById(toBeDeletedIngredient.id!!)
-        assertThat( ingredientService.getAll().contains(toBeDeletedIngredient).not() )
     }
 
     @Order(5)
@@ -67,9 +52,15 @@ class IngredientServiceTest @Autowired constructor(
 
     @Order(6)
     @Test
-    fun`Negative pass - get a deleted ingredient by id`() {
+    fun `Negative pass - get a deleted ingredient by id`() {
         ingredientService.delete(1)
         ingredientService.getById(1)
+    }
+
+    @Order(2)
+    @Test
+    fun `Negative pass - add an ingredient with missing name`() {
+        assertThrows<AssertionError>("You are right. Assertion error is thrown") { createIngredient("") }
     }
 
     private fun checkIngredient(result: Ingredient) {
@@ -80,12 +71,12 @@ class IngredientServiceTest @Autowired constructor(
         assertThat(result.expirationDate).isEqualTo("05.06.2023")
     }
 
-    fun createIngredient(): Ingredient {
+    fun createIngredient(description: String = "Whole milk"): Ingredient {
         return Ingredient(
-                name = "Milk",
-                description = "Whole milk",
-                productionDate = "28.05.2023",
-                expirationDate = "05.06.2023"
+            name = "Milk",
+            description = description,
+            productionDate = "28.05.2023",
+            expirationDate = "05.06.2023"
         )
     }
 }

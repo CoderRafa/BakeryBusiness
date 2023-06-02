@@ -8,7 +8,11 @@ data class Ingredient(
     val description: String,
     val productionDate: String,
     val expirationDate: String
-)
+) {
+    init {
+        assert(description.isNotEmpty() && description.length > 10) { "Some problems with the description!" }
+    }
+}
 
 fun Ingredient.toEntity() = IngredientEntity().apply {
     this@apply.id = this@toEntity.id
