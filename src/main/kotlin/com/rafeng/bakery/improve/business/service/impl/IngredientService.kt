@@ -5,6 +5,7 @@ import com.rafeng.bakery.improve.business.model.dto.toEntity
 import com.rafeng.bakery.improve.business.model.entity.toDto
 import com.rafeng.bakery.improve.business.repository.spring.IngredientRepository
 import org.slf4j.LoggerFactory
+import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,6 +21,11 @@ class IngredientService(
     fun getAll() : List<Ingredient> {
         log.debug("Get all ingredients")
         return ingredientRepository.findAll().map { it.toDto() }
+    }
+
+    fun getById(id: Long): Ingredient {
+        log.debug("Get an ingredient with an Id $id")
+        return ingredientRepository.findById(id).orElseThrow { RuntimeException() }.toDto()
     }
 
     fun delete(id: Long): List<Ingredient> {

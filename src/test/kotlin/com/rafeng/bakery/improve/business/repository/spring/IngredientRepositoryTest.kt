@@ -25,6 +25,8 @@ class IngredientRepositoryTest @Autowired constructor (
         assertThat(ingredientEntity.id).isNotNull
     }
 
+
+
     @Order(2)
     @Test
     fun `Happy pass - get all ingredients from DB`() {
