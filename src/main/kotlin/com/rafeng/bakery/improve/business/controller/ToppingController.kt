@@ -30,7 +30,7 @@ class ToppingController(val toppingService: ToppingService) {
         return toppingService.get()
     }
 
-    @DeleteMapping("/{id}/")
+    @DeleteMapping("/{id}")
     fun deleteTopping(@PathVariable("id") id: Long): List<Topping> {
         log.debug("Delete a topping with an Id $id")
         return toppingService.delete(id)
