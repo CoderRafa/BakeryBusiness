@@ -3,6 +3,7 @@ package com.rafeng.bakery.improve.business.service.impl
 import com.rafeng.bakery.improve.business.model.dto.Ingredient
 import com.rafeng.bakery.improve.business.repository.spring.IngredientRepository
 import com.rafeng.bakery.improve.business.repository.spring.LiquibaseTestConfig
+import com.rafeng.bakery.improve.business.service.spring.IngredientService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.slf4j.LoggerFactory

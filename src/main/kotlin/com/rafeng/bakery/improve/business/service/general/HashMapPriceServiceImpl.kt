@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.service.impl
+package com.rafeng.bakery.improve.business.service.general
 
 import com.rafeng.bakery.improve.business.service.PriceService
 import org.springframework.context.annotation.Profile

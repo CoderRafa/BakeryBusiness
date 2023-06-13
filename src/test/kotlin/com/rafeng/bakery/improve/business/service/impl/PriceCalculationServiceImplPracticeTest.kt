@@ -4,6 +4,9 @@ import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.service.CheckPriceService
 import com.rafeng.bakery.improve.business.service.PriceCalculationService
 import com.rafeng.bakery.improve.business.service.PriceService
+import com.rafeng.bakery.improve.business.service.general.CheckPositivePriceAndNonEmptyRecipeDescriptionServiceImpl
+import com.rafeng.bakery.improve.business.service.general.PriceCalculationServiceImpl
+import com.rafeng.bakery.improve.business.service.general.PriceServiceImpl
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,6 +1,7 @@
 package com.rafeng.bakery.improve.business.service.impl
 
 import com.rafeng.bakery.improve.business.service.PriceService
+import com.rafeng.bakery.improve.business.service.general.PriceServiceImpl
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

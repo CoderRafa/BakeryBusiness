@@ -9,7 +9,7 @@ import com.rafeng.bakery.improve.business.model.dto.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
-import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
+import com.rafeng.bakery.improve.business.service.general.OrderServiceImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*

@@ -1,8 +1,7 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.dto.Worker
-import com.rafeng.bakery.improve.business.service.impl.WorkerService
-import com.rafeng.bakery.improve.business.service.impl.WorkerServiceImpl
+import com.rafeng.bakery.improve.business.service.spring.WorkerService
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*

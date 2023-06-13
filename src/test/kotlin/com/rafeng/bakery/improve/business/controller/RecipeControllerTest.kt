@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.fasterxml.jackson.module.kotlin.jsonMapper
-import com.rafeng.bakery.improve.business.service.impl.RecipeService
+import com.rafeng.bakery.improve.business.service.spring.RecipeService
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test

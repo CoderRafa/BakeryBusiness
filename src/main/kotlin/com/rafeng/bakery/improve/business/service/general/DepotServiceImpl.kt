@@ -1,4 +1,4 @@
-package com.rafeng.bakery.improve.business.service.impl
+package com.rafeng.bakery.improve.business.service.general
 
 import com.rafeng.bakery.improve.business.model.dto.Recipe
 import com.rafeng.bakery.improve.business.repository.impl.DepotRepository

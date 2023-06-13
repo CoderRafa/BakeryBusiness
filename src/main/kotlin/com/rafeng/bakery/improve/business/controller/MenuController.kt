@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.dto.Item
-import com.rafeng.bakery.improve.business.service.impl.MenuServiceImpl
+import com.rafeng.bakery.improve.business.service.general.MenuServiceImpl
 import org.springframework.web.bind.annotation.*
 
 @RestController
