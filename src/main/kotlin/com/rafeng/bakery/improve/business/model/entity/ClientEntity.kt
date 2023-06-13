@@ -1,7 +1,11 @@
 package com.rafeng.bakery.improve.business.model.entity
 
-import com.rafeng.bakery.improve.business.model.Client
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "client")
@@ -20,5 +24,3 @@ class ClientEntity {
     @Column(name = "phoneNumber", nullable = false)
     lateinit var phoneNumber: String
 }
-
-fun ClientEntity.toDto() = Client(id, name, lastname, phoneNumber)

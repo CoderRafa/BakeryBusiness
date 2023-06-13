@@ -17,7 +17,7 @@ import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 
 @Entity(name = "filling")
-class FillingEntity {
+class FillingEntity : EntityTransfer<Filling> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "filling_sequence")
     @Column(name = "id", nullable = false)
@@ -44,6 +44,8 @@ class FillingEntity {
         inverseJoinColumns = [JoinColumn(name = "item_filling_id")]
     )
     lateinit var itemFillings: List<ItemFillingEntity>
+    override fun toDto(): Filling = Filling(id, name, description, fillingType, tasteType)
+
     override fun toString(): String {
         return "FillingEntity(id=$id, name='$name', description='$description', fillingType=$fillingType, tasteType=$tasteType)"
     }
@@ -51,4 +53,6 @@ class FillingEntity {
 
 }
 
-fun FillingEntity.toDto() = Filling(id, name, description, fillingType, tasteType)
+interface EntityTransfer<D> {
+    fun toDto(): D
+}
