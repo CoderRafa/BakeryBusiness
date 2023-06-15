@@ -6,6 +6,7 @@ import com.rafeng.bakery.improve.business.model.dto.PaymentType.*
 import com.rafeng.bakery.improve.business.model.dto.Position.SALESPERSON
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
+import com.rafeng.bakery.improve.business.service.general.OrderServiceImpl
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRecipe
 import org.assertj.core.api.Assertions.assertThat

@@ -1,7 +1,7 @@
 package com.rafeng.bakery.improve.business.controller
 
 import com.rafeng.bakery.improve.business.model.Filling
-import com.rafeng.bakery.improve.business.service.impl.FillingService
+import com.rafeng.bakery.improve.business.service.spring.FillingService
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.DeleteMapping

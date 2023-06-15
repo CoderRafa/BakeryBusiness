@@ -3,8 +3,8 @@ package com.old
 import com.rafeng.bakery.improve.business.service.CheckPriceService
 import com.rafeng.bakery.improve.business.service.PriceCalculationService
 import com.rafeng.bakery.improve.business.service.PriceService
-import com.rafeng.bakery.improve.business.service.impl.CheckPositivePriceAndNonEmptyRecipeDescriptionServiceImpl
-import com.rafeng.bakery.improve.business.service.impl.PriceCalculationServiceImpl
+import com.rafeng.bakery.improve.business.service.general.CheckPositivePriceAndNonEmptyRecipeDescriptionServiceImpl
+import com.rafeng.bakery.improve.business.service.general.PriceCalculationServiceImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

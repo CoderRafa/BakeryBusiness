@@ -4,7 +4,7 @@ import com.rafeng.bakery.improve.business.controller.ItemWithAmountRequest
 import com.rafeng.bakery.improve.business.model.SellItem
 import com.rafeng.bakery.improve.business.repository.impl.OrderRepository
 import com.rafeng.bakery.improve.business.service.PriceService
-import com.rafeng.bakery.improve.business.service.impl.OrderServiceImpl
+import com.rafeng.bakery.improve.business.service.general.OrderServiceImpl
 import com.rafeng.bakery.improve.business.util.createRandomItemByRecipe
 import com.rafeng.bakery.improve.business.util.createRandomOrder
 import com.rafeng.bakery.improve.business.util.discountAmount
